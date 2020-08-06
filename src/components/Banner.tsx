@@ -9,8 +9,9 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     [theme.breakpoints.down("sm")]: {
       container: {
-        background: `url(${process.env.PUBLIC_URL + "/banner.png"}) no-repeat`,
-        backgroundSize: "cover",
+        background: `url(${process.env.PUBLIC_URL +
+          "/banner-m.png"}) no-repeat white`,
+        backgroundSize: "contain",
         backgroundPosition: "right",
       },
       containerOut: {
@@ -60,7 +61,7 @@ const useStyles = makeStyles((theme: Theme) =>
         lineHeight: "21px",
         color: "#ffffff",
         width: "100%",
-        marginTop: 95,
+        marginTop: 160,
       },
       select: {
         position: "absolute",
@@ -77,7 +78,8 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     [theme.breakpoints.between("md", "xl")]: {
       container: {
-        background: `url(${process.env.PUBLIC_URL + "/banner.png"}) no-repeat`,
+        background: `url(${process.env.PUBLIC_URL +
+          "/banner.png"}) no-repeat white`,
         backgroundSize: "contain",
         backgroundPosition: "right top",
       },

@@ -47,6 +47,9 @@ const useStyles = makeStyles((theme: Theme) =>
       as: {
         marginRight: 20,
       },
+      qr: {
+        height: 45,
+      },
     },
   })
 );
@@ -77,7 +80,14 @@ const Starbusiness = (props: any) => {
             className={classes.as}
             src={process.env.PUBLIC_URL + "/as.svg"}
           />
-          <img src={process.env.PUBLIC_URL + "/gp.svg"} />
+          <img
+            src={process.env.PUBLIC_URL + "/gp.svg"}
+            className={classes.as}
+          />
+          <img
+            src={process.env.PUBLIC_URL + "/qr.svg"}
+            className={classes.qr}
+          />
         </div>
       </div>
     </div>

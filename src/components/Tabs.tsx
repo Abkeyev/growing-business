@@ -421,14 +421,15 @@ const Tabs = (props: any) => {
         {toggle === "overview" ? (
           <Grid container direction="row" justify="space-between">
             <Grid item className={classes.item}>
-              <img src={process.env.PUBLIC_URL + "/icons/tengee.svg"} />
+              <img src={process.env.PUBLIC_URL + "/icons/tengeu.svg"} />
               <BccTypography
                 type="p2"
                 weight="bold"
                 block
                 className={classes.itemTitle}
               >
-                Валюта – тенге.
+                Максимальная сумма займа для для субъектов микро, малого и
+                среднего бизнеса - до 40 000 000 ₸
               </BccTypography>
             </Grid>
             <Grid item className={classes.item}>
@@ -443,16 +444,14 @@ const Tabs = (props: any) => {
               </BccTypography>
             </Grid>
             <Grid item className={classes.item}>
-              <img src={process.env.PUBLIC_URL + "/icons/tengeu.svg"} />
+              <img src={process.env.PUBLIC_URL + "/icons/tengee.svg"} />
               <BccTypography
                 type="p2"
                 weight="bold"
                 block
                 className={classes.itemTitle}
               >
-                Максимальная сумма займа для юридических лиц и индивидуальных
-                предпринимателей (субъекты микро, малого и среднего бизнеса) -
-                до 40 000 000 ₸
+                Валюта – тенге.
               </BccTypography>
             </Grid>
             <Grid item className={classes.item}>
@@ -464,11 +463,13 @@ const Tabs = (props: any) => {
                 className={classes.itemTitle}
               >
                 Обеспечение:
-                <br /> - Жилая недвижимость до 150 кв.м. в областных центрах РК
-                <br /> - Коммерческая недвижимость до 200 кв.м. в областных
-                центрах РК
-                <br /> - Приобретаемые основные фонды, с отсрочкой о
-                предоставлении в залог (по решению уполномоченного органа Банка)
+                <br /> - Квартира до 150 кв.м. в областных центрах РК
+                <br /> - Жилые дома до 350 кв.м. с земельным участком от 4 до 20
+                соток в областных центрах РК
+                <br /> - Коммерческая недвижимость до 200 кв.м. с земельным
+                участком от 4 до 20 соток в областных центрах РК
+                <br /> - Приобретаемые имущества, с отсрочкой о предоставлении в
+                залог
               </BccTypography>
             </Grid>
           </Grid>
@@ -482,11 +483,22 @@ const Tabs = (props: any) => {
                 block
                 className={classes.itemTitle}
               >
-                Ежемесячно равными частями
+                Вознаграждение - ежемесячно*
               </BccTypography>
             </Grid>
             <Grid item className={classes.item}>
               <img src={process.env.PUBLIC_URL + "/icons/periodt.svg"} />
+              <BccTypography
+                type="p2"
+                weight="bold"
+                block
+                className={classes.itemTitle}
+              >
+                Основной долг - ежемесячно, равными долями*
+              </BccTypography>
+            </Grid>
+            <Grid item className={classes.item}>
+              <img src={process.env.PUBLIC_URL + "/icons/givet.svg"} />
               <BccTypography
                 type="p2"
                 weight="bold"
@@ -506,129 +518,15 @@ const Tabs = (props: any) => {
                 className={classes.itemTitle}
               >
                 Возможно досрочное погашение без штрафных санкций, с 7-го месяца
-                кредитования
+                кредитования**
               </BccTypography>
             </Grid>
-          </Grid>
-        ) : toggle === "calculator" ? (
-          <Grid
-            container
-            wrap="nowrap"
-            className={classes.calc}
-            justify="space-between"
-          >
             <Grid item>
-              <div className={classes.paymentWrap}>
-                <div className={classes.sliderWrap}>
-                  <BccInput
-                    label="Сумма займа"
-                    key="loan"
-                    value={loan + " ₸"}
-                    variant="filled"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    onChange={(e: any) =>
-                      e.target.value > 30000000
-                        ? setLoan(30000000)
-                        : setLoan(e.target.value)
-                    }
-                    className={classes.input}
-                  />
-                  <BccSlider
-                    style={{
-                      left: 6,
-                      right: 6,
-                      width: "calc(100% - 12px)",
-                      bottom: -1,
-                      padding: 0,
-                      position: "absolute",
-                    }}
-                    min={0}
-                    max={30000000}
-                    step={1000000}
-                    value={loan}
-                    valueLabelDisplay="off"
-                    defaultValue={loan}
-                    onChange={(e: any, val: any) =>
-                      setLoan(val instanceof Array ? val[1] : val)
-                    }
-                  />
-                  <div className={classes.sliderRange}>
-                    <span>0</span>
-                    <span>30 000 000</span>
-                  </div>
-                </div>
-              </div>
-              <div
-                className={`${classes.paymentWrap} ${classes.paymentWrapSec}`}
-              >
-                <div className={classes.sliderWrap}>
-                  <BccInput
-                    label="Выберите срок"
-                    key="month"
-                    value={month + " мес."}
-                    variant="filled"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    onChange={(e: any) =>
-                      e.target.value > 120
-                        ? setMonth(120)
-                        : setMonth(e.target.value)
-                    }
-                    className={classes.input}
-                  />
-                  <BccSlider
-                    style={{
-                      left: 6,
-                      right: 6,
-                      width: "calc(100% - 12px)",
-                      bottom: -1,
-                      padding: 0,
-                      position: "absolute",
-                    }}
-                    min={0}
-                    max={120}
-                    step={1}
-                    value={month}
-                    valueLabelDisplay="off"
-                    defaultValue={loan}
-                    onChange={(e: any, val: any) =>
-                      setMonth(val instanceof Array ? val[1] : val)
-                    }
-                  />
-                  <div className={classes.sliderRange}>
-                    <span>0</span>
-                    <span>120</span>
-                  </div>
-                </div>
-              </div>
-            </Grid>
-            <Grid item>
-              <BccTypography type="h3" block className={classes.sumTitle}>
-                Расчёт
+              <BccTypography type="p2" weight="normal" block>
+                *возможно применение аннуитетного графика платежей
               </BccTypography>
-              <BccTypography type="p3" block className={classes.sumText}>
-                Процентная ставка:
-                <BccTypography className={classes.right} type="h5">
-                  23%
-                </BccTypography>
-              </BccTypography>
-              <BccTypography type="p3" block className={classes.sumText}>
-                Комиссия за управление лимитом:
-                <BccTypography className={classes.right} type="h5">
-                  0.5%
-                </BccTypography>
-              </BccTypography>
-              <BccTypography type="p3" block className={classes.sumText}>
-                Итоговая сумма по кредиту:
-                <BccTypography className={classes.right} type="h5">
-                  1 650 000 ₸
-                </BccTypography>
-              </BccTypography>
-              <BccTypography type="p4" block>
-                *Данные предварительные
+              <BccTypography type="p2" weight="normal" block>
+                ** в зависимости от сроков кредитования
               </BccTypography>
             </Grid>
           </Grid>
@@ -669,24 +567,6 @@ const Tabs = (props: any) => {
                     Перечень документов
                   </BccLink>
                 </Grid>
-                <Grid item>
-                  <img src={process.env.PUBLIC_URL + "/icons/pdf.svg"} />
-                  <BccLink target="_blank" href="">
-                    Анкета-заявление
-                  </BccLink>
-                </Grid>
-                <Grid item>
-                  <img src={process.env.PUBLIC_URL + "/icons/pdf.svg"} />
-                  <BccLink target="_blank" href="">
-                    Заявление о присоединении к оферте
-                  </BccLink>
-                </Grid>
-                <Grid item>
-                  <img src={process.env.PUBLIC_URL + "/icons/pdf.svg"} />
-                  <BccLink target="_blank" href="">
-                    Оферта
-                  </BccLink>
-                </Grid>
               </Grid>
             ) : (
               <Grid container justify="space-between" className={classes.docs}>
@@ -699,19 +579,7 @@ const Tabs = (props: any) => {
                 <Grid item>
                   <img src={process.env.PUBLIC_URL + "/icons/pdf.svg"} />
                   <BccLink target="_blank" href="">
-                    Анкета-заявление
-                  </BccLink>
-                </Grid>
-                <Grid item>
-                  <img src={process.env.PUBLIC_URL + "/icons/pdf.svg"} />
-                  <BccLink target="_blank" href="">
-                    Заявление о присоединении к оферте
-                  </BccLink>
-                </Grid>
-                <Grid item>
-                  <img src={process.env.PUBLIC_URL + "/icons/pdf.svg"} />
-                  <BccLink target="_blank" href="">
-                    Оферта
+                    Решение учредителя
                   </BccLink>
                 </Grid>
               </Grid>
@@ -779,13 +647,13 @@ const Tabs = (props: any) => {
                     <BccTableRow>
                       <BccTableCell>
                         <BccTableRow>
-                          <BccTableCell>ГЭСВ+Комис/12</BccTableCell>
+                          <BccTableCell>20,74%</BccTableCell>
                         </BccTableRow>
                         <BccTableRow>
-                          <BccTableCell>ГЭСВ+Комис/12</BccTableCell>
+                          <BccTableCell>20,84%</BccTableCell>
                         </BccTableRow>
                         <BccTableRow>
-                          <BccTableCell>ГЭСВ+Комис/12</BccTableCell>
+                          <BccTableCell>21,24%</BccTableCell>
                         </BccTableRow>
                       </BccTableCell>
                       <BccTableCell>в месяц</BccTableCell>
@@ -809,13 +677,13 @@ const Tabs = (props: any) => {
                     <BccTableRow>
                       <BccTableCell>
                         <BccTableRow>
-                          <BccTableCell>Х%</BccTableCell>
+                          <BccTableCell>20,7%</BccTableCell>
                         </BccTableRow>
                         <BccTableRow>
-                          <BccTableCell>Х%</BccTableCell>
+                          <BccTableCell>20,8%</BccTableCell>
                         </BccTableRow>
                         <BccTableRow>
-                          <BccTableCell>Х%</BccTableCell>
+                          <BccTableCell>21,2%</BccTableCell>
                         </BccTableRow>
                       </BccTableCell>
                       <BccTableCell>годовых</BccTableCell>

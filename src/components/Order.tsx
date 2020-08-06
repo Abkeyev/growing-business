@@ -281,6 +281,24 @@ const Order = (props: any) => {
     return res.replace(/\(|\)| /g, "");
   };
 
+  const isValid = () => {
+    if (step === 0)
+      return (
+        fio.length > 5 &&
+        sum.length > 1 &&
+        +period > 1 &&
+        iin.length === 12 &&
+        phone.replace("_", "").length === 16 &&
+        agree
+      );
+    else if (step === 1) return code.length === 6;
+    else return true;
+  };
+
+  const handleClose = () => {
+    setOpenError(false);
+  };
+
   const startProcess = () => {
     api.camunda
       .start({
@@ -363,24 +381,6 @@ const Order = (props: any) => {
       });
   };
 
-  const isValid = () => {
-    if (step === 0)
-      return (
-        fio.length > 5 &&
-        sum.length > 1 &&
-        +period > 1 &&
-        iin.length === 12 &&
-        phone.replace("_", "").length === 16 &&
-        agree
-      );
-    else if (step === 1) return code.length === 6;
-    else return true;
-  };
-
-  const handleClose = () => {
-    setOpenError(false);
-  };
-
   return (
     <div className={classes.outerContainer} ref={props.refProp}>
       <div className={classes.container}>
@@ -451,7 +451,11 @@ const Order = (props: any) => {
                     <BccInput
                       className={classes.inputStyle}
                       fullWidth
-                      label={type === "ul" ? "Наименование компании*" : "ФИО*"}
+                      label={
+                        type === "ul"
+                          ? "Наименование компании*"
+                          : "ФИО Индивидуального предпринимателя*"
+                      }
                       variant="filled"
                       id="fio"
                       name="fio"

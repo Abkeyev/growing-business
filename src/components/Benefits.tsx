@@ -87,11 +87,11 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const items = [
   "/icons/idea.svg",
-  "/icons/contract.svg",
+  "/icons/online.svg",
   "/icons/time.svg",
-  "/icons/tengeu.svg",
-  "/icons/period.svg",
-  "/icons/doc.svg",
+  "/icons/limitt.svg",
+  "/icons/loantenge.svg",
+  "/icons/roundperr.svg",
 ];
 
 const Banner = (props: any) => {
