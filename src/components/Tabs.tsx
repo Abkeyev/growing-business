@@ -563,8 +563,20 @@ const Tabs = (props: any) => {
               <Grid container justify="space-between" className={classes.docs}>
                 <Grid item>
                   <img src={process.env.PUBLIC_URL + "/icons/pdf.svg"} />
-                  <BccLink target="_blank" href="">
-                    Перечень документов
+                  <BccLink target="_blank" href="https://www.bcc.kz/ip_kaz.pdf">
+                    Перечень документов [KZ]
+                  </BccLink>
+                </Grid>
+                <Grid item>
+                  <img src={process.env.PUBLIC_URL + "/icons/pdf.svg"} />
+                  <BccLink target="_blank" href="https://www.bcc.kz/ip_rus.pdf">
+                    Перечень документов [RU]
+                  </BccLink>
+                </Grid>
+                <Grid item>
+                  <img src={process.env.PUBLIC_URL + "/icons/pdf.svg"} />
+                  <BccLink target="_blank" href="https://www.bcc.kz/ip_eng.pdf">
+                    Перечень документов [EN]
                   </BccLink>
                 </Grid>
               </Grid>
@@ -572,14 +584,29 @@ const Tabs = (props: any) => {
               <Grid container justify="space-between" className={classes.docs}>
                 <Grid item>
                   <img src={process.env.PUBLIC_URL + "/icons/pdf.svg"} />
-                  <BccLink target="_blank" href="">
-                    Перечень документов
+                  <BccLink
+                    target="_blank"
+                    href="https://www.bcc.kz/too_kaz.pdf"
+                  >
+                    Перечень документов [KZ]
                   </BccLink>
                 </Grid>
                 <Grid item>
                   <img src={process.env.PUBLIC_URL + "/icons/pdf.svg"} />
-                  <BccLink target="_blank" href="">
-                    Решение учредителя
+                  <BccLink
+                    target="_blank"
+                    href="https://www.bcc.kz/too_rus.pdf"
+                  >
+                    Перечень документов [RU]
+                  </BccLink>
+                </Grid>
+                <Grid item>
+                  <img src={process.env.PUBLIC_URL + "/icons/pdf.svg"} />
+                  <BccLink
+                    target="_blank"
+                    href="https://www.bcc.kz/too_eng.pdf"
+                  >
+                    Перечень документов [EN]
                   </BccLink>
                 </Grid>
               </Grid>
