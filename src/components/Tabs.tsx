@@ -268,6 +268,10 @@ const useStyles = makeStyles((theme: Theme) =>
         },
       },
     },
+    tarifText: {
+      marginTop: 24,
+      marginBottom: 24,
+    },
     link: {
       color: "#249052",
       textDecoration: "underline",
@@ -359,6 +363,14 @@ const useStyles = makeStyles((theme: Theme) =>
         },
       },
     },
+    tarifDoc: {
+      display: "flex",
+      alignItems: "center",
+      marginBottom: 24,
+      "& > img": {
+        marginRight: 12,
+      },
+    },
   })
 );
 
@@ -366,7 +378,7 @@ const Tabs = (props: any) => {
   const classes = useStyles({});
   const [loan, setLoan] = React.useState(15000000);
   const [month, setMonth] = React.useState(24);
-  const [toggle, setToggle] = React.useState("overview");
+  const [toggle, setToggle] = React.useState("rates");
   const [docToggle, setDocToggle] = React.useState("ip");
   const { t } = useTranslation();
 
@@ -422,46 +434,26 @@ const Tabs = (props: any) => {
           <Grid container direction="row" justify="space-between">
             <Grid item className={classes.item}>
               <img src={process.env.PUBLIC_URL + "/icons/tengeu.svg"} />
-              <BccTypography
-                type="p2"
-                weight="bold"
-                block
-                className={classes.itemTitle}
-              >
+              <BccTypography type="p2" block className={classes.itemTitle}>
                 Максимальная сумма займа для для субъектов микро, малого и
                 среднего бизнеса - до 40 000 000 ₸
               </BccTypography>
             </Grid>
             <Grid item className={classes.item}>
               <img src={process.env.PUBLIC_URL + "/icons/period.svg"} />
-              <BccTypography
-                type="p2"
-                weight="bold"
-                block
-                className={classes.itemTitle}
-              >
+              <BccTypography type="p2" block className={classes.itemTitle}>
                 Срок кредитования - 12, 24 и 36 месяцев
               </BccTypography>
             </Grid>
             <Grid item className={classes.item}>
               <img src={process.env.PUBLIC_URL + "/icons/tengee.svg"} />
-              <BccTypography
-                type="p2"
-                weight="bold"
-                block
-                className={classes.itemTitle}
-              >
+              <BccTypography type="p2" block className={classes.itemTitle}>
                 Валюта – тенге.
               </BccTypography>
             </Grid>
             <Grid item className={classes.item}>
               <img src={process.env.PUBLIC_URL + "/icons/contractt.svg"} />
-              <BccTypography
-                type="p2"
-                weight="bold"
-                block
-                className={classes.itemTitle}
-              >
+              <BccTypography type="p2" block className={classes.itemTitle}>
                 Обеспечение:
                 <br /> - Квартира до 150 кв.м. в областных центрах РК
                 <br /> - Жилые дома до 350 кв.м. с земельным участком от 4 до 20
@@ -477,46 +469,26 @@ const Tabs = (props: any) => {
           <Grid container direction="row" justify="space-between">
             <Grid item className={classes.item}>
               <img src={process.env.PUBLIC_URL + "/icons/roundperd.svg"} />
-              <BccTypography
-                type="p2"
-                weight="bold"
-                block
-                className={classes.itemTitle}
-              >
+              <BccTypography type="p2" block className={classes.itemTitle}>
                 Вознаграждение - ежемесячно*
               </BccTypography>
             </Grid>
             <Grid item className={classes.item}>
               <img src={process.env.PUBLIC_URL + "/icons/periodt.svg"} />
-              <BccTypography
-                type="p2"
-                weight="bold"
-                block
-                className={classes.itemTitle}
-              >
+              <BccTypography type="p2" block className={classes.itemTitle}>
                 Основной долг - ежемесячно, равными долями*
               </BccTypography>
             </Grid>
             <Grid item className={classes.item}>
               <img src={process.env.PUBLIC_URL + "/icons/givet.svg"} />
-              <BccTypography
-                type="p2"
-                weight="bold"
-                block
-                className={classes.itemTitle}
-              >
+              <BccTypography type="p2" block className={classes.itemTitle}>
                 Очередной платеж для погашения автоматически списывается с
                 текущего счета в указанную в графике дату.
               </BccTypography>
             </Grid>
             <Grid item className={classes.item}>
               <img src={process.env.PUBLIC_URL + "/icons/givet.svg"} />
-              <BccTypography
-                type="p2"
-                weight="bold"
-                block
-                className={classes.itemTitle}
-              >
+              <BccTypography type="p2" block className={classes.itemTitle}>
                 Возможно досрочное погашение без штрафных санкций, с 7-го месяца
                 кредитования**
               </BccTypography>
@@ -561,24 +533,24 @@ const Tabs = (props: any) => {
             </BccToggleButtonGroup>
             {docToggle === "ip" ? (
               <Grid container justify="space-between" className={classes.docs}>
-                <Grid item>
+                {/* <Grid item>
                   <img src={process.env.PUBLIC_URL + "/icons/pdf.svg"} />
                   <BccLink target="_blank" href="https://www.bcc.kz/ip_kaz.pdf">
                     Перечень документов [KZ]
                   </BccLink>
-                </Grid>
+                </Grid> */}
                 <Grid item>
                   <img src={process.env.PUBLIC_URL + "/icons/pdf.svg"} />
                   <BccLink target="_blank" href="https://www.bcc.kz/ip_rus.pdf">
-                    Перечень документов [RU]
+                    Перечень документов
                   </BccLink>
                 </Grid>
-                <Grid item>
+                {/* <Grid item>
                   <img src={process.env.PUBLIC_URL + "/icons/pdf.svg"} />
                   <BccLink target="_blank" href="https://www.bcc.kz/ip_eng.pdf">
                     Перечень документов [EN]
                   </BccLink>
-                </Grid>
+                </Grid> */}
               </Grid>
             ) : (
               <Grid container justify="space-between" className={classes.docs}>
@@ -586,160 +558,238 @@ const Tabs = (props: any) => {
                   <img src={process.env.PUBLIC_URL + "/icons/pdf.svg"} />
                   <BccLink
                     target="_blank"
-                    href="https://www.bcc.kz/too_kaz.pdf"
-                  >
-                    Перечень документов [KZ]
-                  </BccLink>
-                </Grid>
-                <Grid item>
-                  <img src={process.env.PUBLIC_URL + "/icons/pdf.svg"} />
-                  <BccLink
-                    target="_blank"
                     href="https://www.bcc.kz/too_rus.pdf"
                   >
-                    Перечень документов [RU]
+                    Перечень документов
                   </BccLink>
                 </Grid>
                 <Grid item>
-                  <img src={process.env.PUBLIC_URL + "/icons/pdf.svg"} />
+                  <img src={process.env.PUBLIC_URL + "/icons/docFile.svg"} />
                   <BccLink
                     target="_blank"
-                    href="https://www.bcc.kz/too_eng.pdf"
+                    href="http://bcc.kz/declaration_rus.docx"
                   >
-                    Перечень документов [EN]
+                    Шаблон решения единственного участника
+                  </BccLink>
+                </Grid>
+                <Grid item>
+                  <img src={process.env.PUBLIC_URL + "/icons/docFile.svg"} />
+                  <BccLink target="_blank" href="http://bcc.kz/KAXXX_rus.docx">
+                    Шаблон протокола общего собрания учредителей
                   </BccLink>
                 </Grid>
               </Grid>
             )}
           </>
         ) : toggle === "rates" ? (
-          <BccTableContainer>
-            <BccTable aria-label="simple table">
-              <BccTableHead>
-                <BccTableRow>
-                  <BccTableCell>Название тарифа</BccTableCell>
-                  <BccTableCell>Срок</BccTableCell>
-                  <BccTableCell>Ценовые параметры</BccTableCell>
-                </BccTableRow>
-              </BccTableHead>
-              <BccTableBody className={classes.table}>
-                <BccTableRow>
-                  <BccTableCell>
-                    Ставка вознаграждения номинальная:
-                  </BccTableCell>
-                  <BccTableCell>
-                    <BccTableRow>
-                      <BccTableCell>12 месяцев</BccTableCell>
-                    </BccTableRow>
-                    <BccTableRow>
-                      <BccTableCell>24 месяцев</BccTableCell>
-                    </BccTableRow>
-                    <BccTableRow>
-                      <BccTableCell>36 месяцев</BccTableCell>
-                    </BccTableRow>
-                  </BccTableCell>
-                  <BccTableCell>
-                    <BccTableRow>
-                      <BccTableCell>
-                        <BccTableRow>
-                          <BccTableCell>18%</BccTableCell>
-                        </BccTableRow>
-                        <BccTableRow>
-                          <BccTableCell>18,5%</BccTableCell>
-                        </BccTableRow>
-                        <BccTableRow>
-                          <BccTableCell>19%</BccTableCell>
-                        </BccTableRow>
-                      </BccTableCell>
-                      <BccTableCell>годовых</BccTableCell>
-                    </BccTableRow>
-                  </BccTableCell>
-                </BccTableRow>
-                <BccTableRow>
-                  <BccTableCell>
-                    Ставка вознаграждения фактическая:
-                  </BccTableCell>
-                  <BccTableCell>
-                    <BccTableRow>
-                      <BccTableCell>12 месяцев</BccTableCell>
-                    </BccTableRow>
-                    <BccTableRow>
-                      <BccTableCell>24 месяцев</BccTableCell>
-                    </BccTableRow>
-                    <BccTableRow>
-                      <BccTableCell>36 месяцев</BccTableCell>
-                    </BccTableRow>
-                  </BccTableCell>
-                  <BccTableCell>
-                    <BccTableRow>
-                      <BccTableCell>
-                        <BccTableRow>
-                          <BccTableCell>20,74%</BccTableCell>
-                        </BccTableRow>
-                        <BccTableRow>
-                          <BccTableCell>20,84%</BccTableCell>
-                        </BccTableRow>
-                        <BccTableRow>
-                          <BccTableCell>21,24%</BccTableCell>
-                        </BccTableRow>
-                      </BccTableCell>
-                      <BccTableCell>в месяц</BccTableCell>
-                    </BccTableRow>
-                  </BccTableCell>
-                </BccTableRow>
-                <BccTableRow>
-                  <BccTableCell>ГЭСВ</BccTableCell>
-                  <BccTableCell>
-                    <BccTableRow>
-                      <BccTableCell>12 месяцев</BccTableCell>
-                    </BccTableRow>
-                    <BccTableRow>
-                      <BccTableCell>24 месяцев</BccTableCell>
-                    </BccTableRow>
-                    <BccTableRow>
-                      <BccTableCell>36 месяцев</BccTableCell>
-                    </BccTableRow>
-                  </BccTableCell>
-                  <BccTableCell>
-                    <BccTableRow>
-                      <BccTableCell>
-                        <BccTableRow>
-                          <BccTableCell>20,7%</BccTableCell>
-                        </BccTableRow>
-                        <BccTableRow>
-                          <BccTableCell>20,8%</BccTableCell>
-                        </BccTableRow>
-                        <BccTableRow>
-                          <BccTableCell>21,2%</BccTableCell>
-                        </BccTableRow>
-                      </BccTableCell>
-                      <BccTableCell>годовых</BccTableCell>
-                    </BccTableRow>
-                  </BccTableCell>
-                </BccTableRow>
-                <BccTableRow>
-                  <BccTableCell>Пеня за просрочку</BccTableCell>
-                  <BccTableCell></BccTableCell>
-                  <BccTableCell>
-                    <BccTableRow>
-                      <BccTableCell>0,2%</BccTableCell>
-                      <BccTableCell>в день от суммы просрочки</BccTableCell>
-                    </BccTableRow>
-                  </BccTableCell>
-                </BccTableRow>
-                <BccTableRow>
-                  <BccTableCell>Комиссия за организацию займа</BccTableCell>
-                  <BccTableCell></BccTableCell>
-                  <BccTableCell>
-                    <BccTableRow>
-                      <BccTableCell>0,5%</BccTableCell>
-                      <BccTableCell>от суммы кредита</BccTableCell>
-                    </BccTableRow>
-                  </BccTableCell>
-                </BccTableRow>
-              </BccTableBody>
-            </BccTable>
-          </BccTableContainer>
+          <>
+            <BccTypography
+              type="h6"
+              className={classes.tarifText}
+              weight="bold"
+              block
+            >
+              Средства ЕБРР
+            </BccTypography>
+            <BccTableContainer>
+              <BccTable aria-label="simple table">
+                <BccTableHead>
+                  <BccTableRow>
+                    <BccTableCell>Название тарифа</BccTableCell>
+                    <BccTableCell>Срок</BccTableCell>
+                    <BccTableCell>Ценовые параметры</BccTableCell>
+                  </BccTableRow>
+                </BccTableHead>
+                <BccTableBody className={classes.table}>
+                  <BccTableRow>
+                    <BccTableCell>
+                      Ставка вознаграждения номинальная*:
+                    </BccTableCell>
+                    <BccTableCell>
+                      <BccTableRow>
+                        <BccTableCell>12 месяцев</BccTableCell>
+                      </BccTableRow>
+                      <BccTableRow>
+                        <BccTableCell>24 месяцев</BccTableCell>
+                      </BccTableRow>
+                      <BccTableRow>
+                        <BccTableCell>36 месяцев</BccTableCell>
+                      </BccTableRow>
+                    </BccTableCell>
+                    <BccTableCell>
+                      <BccTableRow>
+                        <BccTableCell>15%</BccTableCell>
+                        <BccTableCell>годовых</BccTableCell>
+                      </BccTableRow>
+                    </BccTableCell>
+                  </BccTableRow>
+                  <BccTableRow>
+                    <BccTableCell>ГЭСВ</BccTableCell>
+                    <BccTableCell>
+                      <BccTableRow>
+                        <BccTableCell>12 месяцев</BccTableCell>
+                      </BccTableRow>
+                      <BccTableRow>
+                        <BccTableCell>24 месяцев</BccTableCell>
+                      </BccTableRow>
+                      <BccTableRow>
+                        <BccTableCell>36 месяцев</BccTableCell>
+                      </BccTableRow>
+                    </BccTableCell>
+                    <BccTableCell>
+                      <BccTableRow>
+                        <BccTableCell>16,5%</BccTableCell>
+                        <BccTableCell>годовых</BccTableCell>
+                      </BccTableRow>
+                    </BccTableCell>
+                  </BccTableRow>
+                  <BccTableRow>
+                    <BccTableCell>Пеня за просрочку</BccTableCell>
+                    <BccTableCell></BccTableCell>
+                    <BccTableCell>
+                      <BccTableRow>
+                        <BccTableCell>0,2%</BccTableCell>
+                        <BccTableCell>в день от суммы просрочки</BccTableCell>
+                      </BccTableRow>
+                    </BccTableCell>
+                  </BccTableRow>
+                  <BccTableRow>
+                    <BccTableCell>Комиссия за организацию займа*</BccTableCell>
+                    <BccTableCell></BccTableCell>
+                    <BccTableCell>
+                      <BccTableRow>
+                        <BccTableCell>0,5%</BccTableCell>
+                        <BccTableCell>от суммы кредита</BccTableCell>
+                      </BccTableRow>
+                    </BccTableCell>
+                  </BccTableRow>
+                </BccTableBody>
+              </BccTable>
+            </BccTableContainer>
+            <BccTypography
+              type="p2"
+              className={classes.tarifText}
+              weight="normal"
+              block
+            >
+              * При включении в Государственную программу поддержки
+              предпринимательства “Дорожная карта бизнеса - 2025” номинальная
+              ставка вознаграждения будет составлять 14% годовых, при этом
+              комиссия за организацию займа не взимается.
+            </BccTypography>
+            <div className={classes.tarifDoc}>
+              <img src={process.env.PUBLIC_URL + "/icons/docFile.svg"} />
+              <BccLink
+                target="_blank"
+                href="https://docs.google.com/document/d/1bN-Kb4jFx04EoLqixMd0E-8g9TeJAE9edaazNl60Sx0/edit"
+              >
+                Критерии для получения займа по средствам ЕБРР
+              </BccLink>
+            </div>
+            <BccTypography
+              type="h6"
+              className={classes.tarifText}
+              weight="bold"
+              block
+            >
+              Собственные средства банка
+            </BccTypography>
+            <BccTableContainer>
+              <BccTable aria-label="simple table">
+                <BccTableHead>
+                  <BccTableRow>
+                    <BccTableCell>Название тарифа</BccTableCell>
+                    <BccTableCell>Срок</BccTableCell>
+                    <BccTableCell>Ценовые параметры</BccTableCell>
+                  </BccTableRow>
+                </BccTableHead>
+                <BccTableBody className={classes.table}>
+                  <BccTableRow>
+                    <BccTableCell>
+                      Ставка вознаграждения номинальная*:
+                    </BccTableCell>
+                    <BccTableCell>
+                      <BccTableRow>
+                        <BccTableCell>12 месяцев</BccTableCell>
+                      </BccTableRow>
+                      <BccTableRow>
+                        <BccTableCell>24 месяцев</BccTableCell>
+                      </BccTableRow>
+                      <BccTableRow>
+                        <BccTableCell>36 месяцев</BccTableCell>
+                      </BccTableRow>
+                    </BccTableCell>
+                    <BccTableCell>
+                      <BccTableRow>
+                        <BccTableCell>
+                          <BccTableRow>
+                            <BccTableCell>18%</BccTableCell>
+                          </BccTableRow>
+                          <BccTableRow>
+                            <BccTableCell>18,5%</BccTableCell>
+                          </BccTableRow>
+                          <BccTableRow>
+                            <BccTableCell>19%</BccTableCell>
+                          </BccTableRow>
+                        </BccTableCell>
+                        <BccTableCell>годовых</BccTableCell>
+                      </BccTableRow>
+                    </BccTableCell>
+                  </BccTableRow>
+                  <BccTableRow>
+                    <BccTableCell>ГЭСВ</BccTableCell>
+                    <BccTableCell>
+                      <BccTableRow>
+                        <BccTableCell>12 месяцев</BccTableCell>
+                      </BccTableRow>
+                      <BccTableRow>
+                        <BccTableCell>24 месяцев</BccTableCell>
+                      </BccTableRow>
+                      <BccTableRow>
+                        <BccTableCell>36 месяцев</BccTableCell>
+                      </BccTableRow>
+                    </BccTableCell>
+                    <BccTableCell>
+                      <BccTableRow>
+                        <BccTableCell>
+                          <BccTableRow>
+                            <BccTableCell>20,7%</BccTableCell>
+                          </BccTableRow>
+                          <BccTableRow>
+                            <BccTableCell>20,8%</BccTableCell>
+                          </BccTableRow>
+                          <BccTableRow>
+                            <BccTableCell>21,2%</BccTableCell>
+                          </BccTableRow>
+                        </BccTableCell>
+                        <BccTableCell>годовых</BccTableCell>
+                      </BccTableRow>
+                    </BccTableCell>
+                  </BccTableRow>
+                  <BccTableRow>
+                    <BccTableCell>Пеня за просрочку</BccTableCell>
+                    <BccTableCell></BccTableCell>
+                    <BccTableCell>
+                      <BccTableRow>
+                        <BccTableCell>0,2%</BccTableCell>
+                        <BccTableCell>в день от суммы просрочки</BccTableCell>
+                      </BccTableRow>
+                    </BccTableCell>
+                  </BccTableRow>
+                  <BccTableRow>
+                    <BccTableCell>Комиссия за организацию займа*</BccTableCell>
+                    <BccTableCell></BccTableCell>
+                    <BccTableCell>
+                      <BccTableRow>
+                        <BccTableCell>0,5%</BccTableCell>
+                        <BccTableCell>от суммы кредита</BccTableCell>
+                      </BccTableRow>
+                    </BccTableCell>
+                  </BccTableRow>
+                </BccTableBody>
+              </BccTable>
+            </BccTableContainer>
+          </>
         ) : (
           ""
         )}

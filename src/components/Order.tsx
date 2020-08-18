@@ -9,6 +9,7 @@ import {
   BccButton,
   BccFormControl,
   BccFormControlLabel,
+  BccLink,
 } from "./BccComponents";
 import api from "../api/Api";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
@@ -460,8 +461,8 @@ const Order = (props: any) => {
                       fullWidth
                       label={
                         type === "ul"
-                          ? "Наименование компании*"
-                          : "ФИО Индивидуального предпринимателя*"
+                          ? "Наименование компании"
+                          : "ФИО Индивидуального предпринимателя"
                       }
                       variant="filled"
                       id="fio"
@@ -568,9 +569,15 @@ const Order = (props: any) => {
                       </Grid>
                       <Grid item>
                         <BccTypography type="p3">
-                          Подтверждаю согласие на сбор и обработку персональных
-                          данных, включая получение информации и кредитного
-                          отчета с ТОО «Первое кредитное бюро» и ГБД ЮЛ.
+                          Подтверждаю{" "}
+                          <BccLink
+                            href="http://bcc.kz/consent_rus.pdf"
+                            target="_blank"
+                          >
+                            согласие на сбор и обработку персональных данных
+                          </BccLink>
+                          , включая получение информации и кредитного отчета с
+                          ТОО «Первое кредитное бюро» и ГБД ЮЛ.
                         </BccTypography>
                       </Grid>
                     </Grid>

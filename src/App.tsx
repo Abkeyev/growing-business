@@ -27,7 +27,6 @@ function App() {
       <Tabs />
       <Order scrollToOrder={scrollToOrderRef} refProp={orderRef} />
       <Starbusiness />
-      <Useful />
       <CallUs />
       <Footer />
     </div>

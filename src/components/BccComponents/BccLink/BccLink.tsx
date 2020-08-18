@@ -5,7 +5,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     link: {
       fontSize: "inherit",
-      color: "#249052",
+      color: "#249052!important",
     },
   })
 );
