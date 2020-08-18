@@ -378,7 +378,7 @@ const Tabs = (props: any) => {
   const classes = useStyles({});
   const [loan, setLoan] = React.useState(15000000);
   const [month, setMonth] = React.useState(24);
-  const [toggle, setToggle] = React.useState("rates");
+  const [toggle, setToggle] = React.useState("overview");
   const [docToggle, setDocToggle] = React.useState("ip");
   const { t } = useTranslation();
 
