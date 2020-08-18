@@ -25,7 +25,7 @@ function App() {
       <Banner scrollToOrder={scrollToOrderRef} />
       <Benefits />
       <Tabs />
-      <Order refProp={orderRef} />
+      <Order scrollToOrder={scrollToOrderRef} refProp={orderRef} />
       <Starbusiness />
       <Useful />
       <CallUs />

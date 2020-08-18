@@ -316,6 +316,7 @@ const Order = (props: any) => {
       })
       .then((res: any) => {
         setStep(2);
+        props.scrollToOrder(false);
         setLoading(false);
       })
       .catch((e: any) => {
@@ -337,10 +338,12 @@ const Order = (props: any) => {
       .then(() => {
         localStorage.removeItem("userContext");
         setStep(1);
+        props.scrollToOrder(false);
         setLoading(false);
       })
       .catch((e: any) => {
         console.error(e);
+        props.scrollToOrder(false);
         setOpenError(true);
         setLoading(false);
       });
@@ -355,10 +358,12 @@ const Order = (props: any) => {
         otp: code,
       })
       .then((userContext) => {
+        props.scrollToOrder(false);
         localStorage.setItem("userContext", JSON.stringify(userContext));
         startProcess();
       })
       .catch((e: any) => {
+        props.scrollToOrder(false);
         console.error(e);
         setOpenError(true);
         setLoading(false);
@@ -370,12 +375,14 @@ const Order = (props: any) => {
     api.authOtp
       .sendOtp({ iin: iin, phone: formatPhoneNumber() })
       .then(() => {
+        props.scrollToOrder(false);
         setTimer(90);
         setCode("");
         setLoading(false);
       })
       .catch((e: any) => {
         console.error(e);
+        props.scrollToOrder(false);
         setOpenError(true);
         setLoading(false);
       });
