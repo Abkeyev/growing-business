@@ -380,6 +380,7 @@ const Tabs = (props: any) => {
   const [month, setMonth] = React.useState(24);
   const [toggle, setToggle] = React.useState("overview");
   const [docToggle, setDocToggle] = React.useState("ip");
+  const [tarifToggle, setTarifToggle] = React.useState("ebr");
   const { t } = useTranslation();
 
   return (
@@ -583,212 +584,235 @@ const Tabs = (props: any) => {
           </>
         ) : toggle === "rates" ? (
           <>
-            <BccTypography
-              type="h6"
-              className={classes.tarifText}
-              weight="bold"
-              block
+            <BccToggleButtonGroup
+              value={tarifToggle}
+              exclusive
+              onChange={(e: any, next: any) => {
+                next && setTarifToggle(next);
+              }}
+              className={classes.toggleGroup}
             >
-              Средства ЕБРР
-            </BccTypography>
-            <BccTableContainer>
-              <BccTable aria-label="simple table">
-                <BccTableHead>
-                  <BccTableRow>
-                    <BccTableCell>Название тарифа</BccTableCell>
-                    <BccTableCell>Срок</BccTableCell>
-                    <BccTableCell>Ценовые параметры</BccTableCell>
-                  </BccTableRow>
-                </BccTableHead>
-                <BccTableBody className={classes.table}>
-                  <BccTableRow>
-                    <BccTableCell>
-                      Ставка вознаграждения номинальная*:
-                    </BccTableCell>
-                    <BccTableCell>
+              <BccToggleButton value="ebr">
+                <BccTypography
+                  className={classes.toggleText}
+                  weight="medium"
+                  type="p2"
+                >
+                  Средства ЕБРР
+                </BccTypography>
+              </BccToggleButton>
+              <BccToggleButton value="ssb">
+                <BccTypography
+                  className={classes.toggleText}
+                  weight="medium"
+                  type="p2"
+                >
+                  Собственные средства банка
+                </BccTypography>
+              </BccToggleButton>
+            </BccToggleButtonGroup>
+
+            {tarifToggle === "ebr" ? (
+              <>
+                <BccTableContainer>
+                  <BccTable aria-label="simple table">
+                    <BccTableHead>
                       <BccTableRow>
-                        <BccTableCell>12 месяцев</BccTableCell>
+                        <BccTableCell>Название тарифа</BccTableCell>
+                        <BccTableCell>Срок</BccTableCell>
+                        <BccTableCell>Ценовые параметры</BccTableCell>
                       </BccTableRow>
-                      <BccTableRow>
-                        <BccTableCell>24 месяцев</BccTableCell>
-                      </BccTableRow>
-                      <BccTableRow>
-                        <BccTableCell>36 месяцев</BccTableCell>
-                      </BccTableRow>
-                    </BccTableCell>
-                    <BccTableCell>
-                      <BccTableRow>
-                        <BccTableCell>15%</BccTableCell>
-                        <BccTableCell>годовых</BccTableCell>
-                      </BccTableRow>
-                    </BccTableCell>
-                  </BccTableRow>
-                  <BccTableRow>
-                    <BccTableCell>ГЭСВ</BccTableCell>
-                    <BccTableCell>
-                      <BccTableRow>
-                        <BccTableCell>12 месяцев</BccTableCell>
-                      </BccTableRow>
-                      <BccTableRow>
-                        <BccTableCell>24 месяцев</BccTableCell>
-                      </BccTableRow>
-                      <BccTableRow>
-                        <BccTableCell>36 месяцев</BccTableCell>
-                      </BccTableRow>
-                    </BccTableCell>
-                    <BccTableCell>
-                      <BccTableRow>
-                        <BccTableCell>16,5%</BccTableCell>
-                        <BccTableCell>годовых</BccTableCell>
-                      </BccTableRow>
-                    </BccTableCell>
-                  </BccTableRow>
-                  <BccTableRow>
-                    <BccTableCell>Пеня за просрочку</BccTableCell>
-                    <BccTableCell></BccTableCell>
-                    <BccTableCell>
-                      <BccTableRow>
-                        <BccTableCell>0,2%</BccTableCell>
-                        <BccTableCell>в день от суммы просрочки</BccTableCell>
-                      </BccTableRow>
-                    </BccTableCell>
-                  </BccTableRow>
-                  <BccTableRow>
-                    <BccTableCell>Комиссия за организацию займа*</BccTableCell>
-                    <BccTableCell></BccTableCell>
-                    <BccTableCell>
-                      <BccTableRow>
-                        <BccTableCell>0,5%</BccTableCell>
-                        <BccTableCell>от суммы кредита</BccTableCell>
-                      </BccTableRow>
-                    </BccTableCell>
-                  </BccTableRow>
-                </BccTableBody>
-              </BccTable>
-            </BccTableContainer>
-            <BccTypography
-              type="p2"
-              className={classes.tarifText}
-              weight="normal"
-              block
-            >
-              * При включении в Государственную программу поддержки
-              предпринимательства “Дорожная карта бизнеса - 2025” номинальная
-              ставка вознаграждения будет составлять 14% годовых, при этом
-              комиссия за организацию займа не взимается.
-            </BccTypography>
-            <div className={classes.tarifDoc}>
-              <img src={process.env.PUBLIC_URL + "/icons/docFile.svg"} />
-              <BccLink
-                target="_blank"
-                href="https://docs.google.com/document/d/1bN-Kb4jFx04EoLqixMd0E-8g9TeJAE9edaazNl60Sx0/edit"
-              >
-                Критерии для получения займа по средствам ЕБРР
-              </BccLink>
-            </div>
-            <BccTypography
-              type="h6"
-              className={classes.tarifText}
-              weight="bold"
-              block
-            >
-              Собственные средства банка
-            </BccTypography>
-            <BccTableContainer>
-              <BccTable aria-label="simple table">
-                <BccTableHead>
-                  <BccTableRow>
-                    <BccTableCell>Название тарифа</BccTableCell>
-                    <BccTableCell>Срок</BccTableCell>
-                    <BccTableCell>Ценовые параметры</BccTableCell>
-                  </BccTableRow>
-                </BccTableHead>
-                <BccTableBody className={classes.table}>
-                  <BccTableRow>
-                    <BccTableCell>
-                      Ставка вознаграждения номинальная*:
-                    </BccTableCell>
-                    <BccTableCell>
-                      <BccTableRow>
-                        <BccTableCell>12 месяцев</BccTableCell>
-                      </BccTableRow>
-                      <BccTableRow>
-                        <BccTableCell>24 месяцев</BccTableCell>
-                      </BccTableRow>
-                      <BccTableRow>
-                        <BccTableCell>36 месяцев</BccTableCell>
-                      </BccTableRow>
-                    </BccTableCell>
-                    <BccTableCell>
+                    </BccTableHead>
+                    <BccTableBody className={classes.table}>
                       <BccTableRow>
                         <BccTableCell>
-                          <BccTableRow>
-                            <BccTableCell>18%</BccTableCell>
-                          </BccTableRow>
-                          <BccTableRow>
-                            <BccTableCell>18,5%</BccTableCell>
-                          </BccTableRow>
-                          <BccTableRow>
-                            <BccTableCell>19%</BccTableCell>
-                          </BccTableRow>
+                          Ставка вознаграждения номинальная*:
                         </BccTableCell>
-                        <BccTableCell>годовых</BccTableCell>
-                      </BccTableRow>
-                    </BccTableCell>
-                  </BccTableRow>
-                  <BccTableRow>
-                    <BccTableCell>ГЭСВ</BccTableCell>
-                    <BccTableCell>
-                      <BccTableRow>
-                        <BccTableCell>12 месяцев</BccTableCell>
-                      </BccTableRow>
-                      <BccTableRow>
-                        <BccTableCell>24 месяцев</BccTableCell>
-                      </BccTableRow>
-                      <BccTableRow>
-                        <BccTableCell>36 месяцев</BccTableCell>
-                      </BccTableRow>
-                    </BccTableCell>
-                    <BccTableCell>
-                      <BccTableRow>
                         <BccTableCell>
                           <BccTableRow>
-                            <BccTableCell>20,7%</BccTableCell>
+                            <BccTableCell>12 месяцев</BccTableCell>
                           </BccTableRow>
                           <BccTableRow>
-                            <BccTableCell>20,8%</BccTableCell>
+                            <BccTableCell>24 месяцев</BccTableCell>
                           </BccTableRow>
                           <BccTableRow>
-                            <BccTableCell>21,2%</BccTableCell>
+                            <BccTableCell>36 месяцев</BccTableCell>
                           </BccTableRow>
                         </BccTableCell>
-                        <BccTableCell>годовых</BccTableCell>
+                        <BccTableCell>
+                          <BccTableRow>
+                            <BccTableCell>15%</BccTableCell>
+                            <BccTableCell>годовых</BccTableCell>
+                          </BccTableRow>
+                        </BccTableCell>
                       </BccTableRow>
-                    </BccTableCell>
-                  </BccTableRow>
-                  <BccTableRow>
-                    <BccTableCell>Пеня за просрочку</BccTableCell>
-                    <BccTableCell></BccTableCell>
-                    <BccTableCell>
                       <BccTableRow>
-                        <BccTableCell>0,2%</BccTableCell>
-                        <BccTableCell>в день от суммы просрочки</BccTableCell>
+                        <BccTableCell>ГЭСВ</BccTableCell>
+                        <BccTableCell>
+                          <BccTableRow>
+                            <BccTableCell>12 месяцев</BccTableCell>
+                          </BccTableRow>
+                          <BccTableRow>
+                            <BccTableCell>24 месяцев</BccTableCell>
+                          </BccTableRow>
+                          <BccTableRow>
+                            <BccTableCell>36 месяцев</BccTableCell>
+                          </BccTableRow>
+                        </BccTableCell>
+                        <BccTableCell>
+                          <BccTableRow>
+                            <BccTableCell>16,5%</BccTableCell>
+                            <BccTableCell>годовых</BccTableCell>
+                          </BccTableRow>
+                        </BccTableCell>
                       </BccTableRow>
-                    </BccTableCell>
-                  </BccTableRow>
-                  <BccTableRow>
-                    <BccTableCell>Комиссия за организацию займа*</BccTableCell>
-                    <BccTableCell></BccTableCell>
-                    <BccTableCell>
                       <BccTableRow>
-                        <BccTableCell>0,5%</BccTableCell>
-                        <BccTableCell>от суммы кредита</BccTableCell>
+                        <BccTableCell>Пеня за просрочку</BccTableCell>
+                        <BccTableCell></BccTableCell>
+                        <BccTableCell>
+                          <BccTableRow>
+                            <BccTableCell>0,2%</BccTableCell>
+                            <BccTableCell>
+                              в день от суммы просрочки
+                            </BccTableCell>
+                          </BccTableRow>
+                        </BccTableCell>
                       </BccTableRow>
-                    </BccTableCell>
-                  </BccTableRow>
-                </BccTableBody>
-              </BccTable>
-            </BccTableContainer>
+                      <BccTableRow>
+                        <BccTableCell>
+                          Комиссия за организацию займа*
+                        </BccTableCell>
+                        <BccTableCell></BccTableCell>
+                        <BccTableCell>
+                          <BccTableRow>
+                            <BccTableCell>0,5%</BccTableCell>
+                            <BccTableCell>от суммы кредита</BccTableCell>
+                          </BccTableRow>
+                        </BccTableCell>
+                      </BccTableRow>
+                    </BccTableBody>
+                  </BccTable>
+                </BccTableContainer>
+                <BccTypography
+                  type="p2"
+                  className={classes.tarifText}
+                  weight="normal"
+                  block
+                >
+                  * При включении в Государственную программу поддержки
+                  предпринимательства “Дорожная карта бизнеса - 2025”
+                  номинальная ставка вознаграждения будет составлять 14%
+                  годовых, при этом комиссия за организацию займа не взимается.
+                </BccTypography>
+                <div className={classes.tarifDoc}>
+                  <img src={process.env.PUBLIC_URL + "/icons/docFile.svg"} />
+                  <BccLink
+                    target="_blank"
+                    href="https://docs.google.com/document/d/1bN-Kb4jFx04EoLqixMd0E-8g9TeJAE9edaazNl60Sx0/edit"
+                  >
+                    Критерии для получения займа по средствам ЕБРР
+                  </BccLink>
+                </div>
+              </>
+            ) : (
+              <BccTableContainer>
+                <BccTable aria-label="simple table">
+                  <BccTableHead>
+                    <BccTableRow>
+                      <BccTableCell>Название тарифа</BccTableCell>
+                      <BccTableCell>Срок</BccTableCell>
+                      <BccTableCell>Ценовые параметры</BccTableCell>
+                    </BccTableRow>
+                  </BccTableHead>
+                  <BccTableBody className={classes.table}>
+                    <BccTableRow>
+                      <BccTableCell>
+                        Ставка вознаграждения номинальная*:
+                      </BccTableCell>
+                      <BccTableCell>
+                        <BccTableRow>
+                          <BccTableCell>12 месяцев</BccTableCell>
+                        </BccTableRow>
+                        <BccTableRow>
+                          <BccTableCell>24 месяцев</BccTableCell>
+                        </BccTableRow>
+                        <BccTableRow>
+                          <BccTableCell>36 месяцев</BccTableCell>
+                        </BccTableRow>
+                      </BccTableCell>
+                      <BccTableCell>
+                        <BccTableRow>
+                          <BccTableCell>
+                            <BccTableRow>
+                              <BccTableCell>18%</BccTableCell>
+                            </BccTableRow>
+                            <BccTableRow>
+                              <BccTableCell>18,5%</BccTableCell>
+                            </BccTableRow>
+                            <BccTableRow>
+                              <BccTableCell>19%</BccTableCell>
+                            </BccTableRow>
+                          </BccTableCell>
+                          <BccTableCell>годовых</BccTableCell>
+                        </BccTableRow>
+                      </BccTableCell>
+                    </BccTableRow>
+                    <BccTableRow>
+                      <BccTableCell>ГЭСВ</BccTableCell>
+                      <BccTableCell>
+                        <BccTableRow>
+                          <BccTableCell>12 месяцев</BccTableCell>
+                        </BccTableRow>
+                        <BccTableRow>
+                          <BccTableCell>24 месяцев</BccTableCell>
+                        </BccTableRow>
+                        <BccTableRow>
+                          <BccTableCell>36 месяцев</BccTableCell>
+                        </BccTableRow>
+                      </BccTableCell>
+                      <BccTableCell>
+                        <BccTableRow>
+                          <BccTableCell>
+                            <BccTableRow>
+                              <BccTableCell>20,7%</BccTableCell>
+                            </BccTableRow>
+                            <BccTableRow>
+                              <BccTableCell>20,8%</BccTableCell>
+                            </BccTableRow>
+                            <BccTableRow>
+                              <BccTableCell>21,2%</BccTableCell>
+                            </BccTableRow>
+                          </BccTableCell>
+                          <BccTableCell>годовых</BccTableCell>
+                        </BccTableRow>
+                      </BccTableCell>
+                    </BccTableRow>
+                    <BccTableRow>
+                      <BccTableCell>Пеня за просрочку</BccTableCell>
+                      <BccTableCell></BccTableCell>
+                      <BccTableCell>
+                        <BccTableRow>
+                          <BccTableCell>0,2%</BccTableCell>
+                          <BccTableCell>в день от суммы просрочки</BccTableCell>
+                        </BccTableRow>
+                      </BccTableCell>
+                    </BccTableRow>
+                    <BccTableRow>
+                      <BccTableCell>
+                        Комиссия за организацию займа*
+                      </BccTableCell>
+                      <BccTableCell></BccTableCell>
+                      <BccTableCell>
+                        <BccTableRow>
+                          <BccTableCell>0,5%</BccTableCell>
+                          <BccTableCell>от суммы кредита</BccTableCell>
+                        </BccTableRow>
+                      </BccTableCell>
+                    </BccTableRow>
+                  </BccTableBody>
+                </BccTable>
+              </BccTableContainer>
+            )}
           </>
         ) : (
           ""
