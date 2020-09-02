@@ -2,6 +2,7 @@ import React from "react";
 import { Grid } from "@material-ui/core";
 import { BccTypography, BccButton } from "./BccComponents";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -56,6 +57,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Starbusiness = (props: any) => {
   const classes = useStyles({});
+  const { t } = useTranslation();
 
   return (
     <div className={classes.outerContainer}>
@@ -67,14 +69,14 @@ const Starbusiness = (props: any) => {
             className={classes.btn}
           >
             <BccTypography block type="p4">
-              Мобильный банкинг
+              {t("star.chip")}
             </BccTypography>
           </BccButton>
           <BccTypography block type="h3" className={classes.title}>
             StarBusiness
           </BccTypography>
           <BccTypography block type="p2" className={classes.subTitle}>
-            Управляйте бизнесом онлайн через мобильное приложение “StarBusiness”
+            {t("star.desc")}
           </BccTypography>
           <img
             className={classes.as}

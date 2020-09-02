@@ -10,6 +10,7 @@ import {
   BccFormControl,
   BccFormControlLabel,
   BccLink,
+  BccSlider,
 } from "./BccComponents";
 import api from "../api/Api";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
@@ -196,12 +197,40 @@ const useStyles = makeStyles((theme: Theme) =>
         opacity: 0.8,
       },
     },
+    sliderRange: {
+      position: "absolute",
+      left: 0,
+      right: 0,
+      bottom: -20,
+      color: "#b3b6ba",
+      display: "flex",
+      justifyContent: "space-between",
+      fontSize: 12,
+    },
     code: {
       margin: 0,
       "& input": {
         height: 62,
         boxSizing: "border-box",
       },
+    },
+    paymentWrap: {
+      position: "relative",
+      marginBottom: 40,
+    },
+    sliderWrap: {
+      position: "relative",
+      width: "100%",
+    },
+    input: {
+      display: "block",
+      width: "100%",
+      "& > div": {
+        width: "inherit",
+      },
+    },
+    okBtn: {
+      minWidth: 160,
     },
   })
 );
@@ -220,8 +249,8 @@ const BccMaskedInput = (props: TextMaskCustomProps) => {
     <MaskedInput
       {...other}
       ref={(ref: any) => inputRef(ref ? ref.inputElement : null)}
-      mask="7(111) 111 11 11"
-      placeholder={"7(707) 707 77 77"}
+      mask="+7(111) 111 11 11"
+      placeholder={"+7(707) 707 77 77"}
     />
   );
 };
@@ -255,17 +284,22 @@ const Order = (props: any) => {
   const [phone, setPhone] = React.useState("");
   const [step, setStep] = React.useState(0);
   const [email, setEmail] = React.useState("");
-  const [sum, setSum] = React.useState("");
+  const [sum, setSum] = React.useState(1000000);
   const [period, setPeriod] = React.useState("");
   const [iin, setIin] = React.useState("");
   const [city, setCity] = React.useState("");
-  const [type, setType] = React.useState("ip");
+  const [type, setType] = React.useState("0");
   const [isLoading, setLoading] = React.useState(false);
   const [phoneError, setPhoneError] = React.useState<boolean>(false);
+  const [fioError, setFioError] = React.useState<boolean>(false);
+  const [iinError, setIinError] = React.useState<boolean>(false);
+  const [emailError, setEmailError] = React.useState<boolean>(false);
   const [openError, setOpenError] = React.useState(false);
   const [agree, setAgree] = React.useState<boolean>(true);
   const [code, setCode] = React.useState("");
   const [timer, setTimer] = React.useState(0);
+  const [processInstanceId, setProcessInstanceId] = React.useState("");
+  const [token, setToken] = React.useState("");
 
   React.useEffect(() => {
     let timeOut = setInterval(() => {
@@ -278,21 +312,14 @@ const Order = (props: any) => {
 
   const formatPhoneNumber = () => {
     let res = phone;
-    if (phone.slice(0, 1) === "8") res = "7" + phone.slice(1);
+    if (phone.slice(0, 1) === "8") res = "+7" + phone.slice(1);
     return res.replace(/\(|\)| /g, "");
   };
 
   const isValid = () => {
-    if (step === 0)
-      return (
-        fio.length > 5 &&
-        sum.length > 1 &&
-        +period > 1 &&
-        iin.length === 12 &&
-        phone.replace("_", "").length === 16 &&
-        agree
-      );
-    else if (step === 1) return code.length === 6;
+    if (step === 0) {
+      return period !== "" && agree;
+    } else if (step === 1) return code.length === 6;
     else return true;
   };
 
@@ -306,7 +333,8 @@ const Order = (props: any) => {
         env: {
           production: webConfigEnv.PRODUCTION === "1",
         },
-        client: {
+        requestInfo: {
+          type,
           fio: fio,
           iin: iin,
           phone: formatPhoneNumber(),
@@ -315,7 +343,9 @@ const Order = (props: any) => {
           period: period,
         },
       })
-      .then((res: any) => {
+      .then((userContext) => {
+        localStorage.setItem("processInstanceId", JSON.stringify(userContext));
+        setProcessInstanceId(userContext.processInstanceId);
         setStep(2);
         props.scrollToOrder(false);
         setLoading(false);
@@ -327,11 +357,36 @@ const Order = (props: any) => {
       });
   };
 
-  const getOtp = () => {
-    if (phone.substr(2, 1) !== "7") {
+  const validate = () => {
+    let temp = false;
+
+    if (fio.length < 5) {
+      setFioError(true);
+      temp = true;
+    } else setFioError(false);
+
+    if (iin.length === 12) {
+      setIinError(false);
+    } else {
+      temp = true;
+      setIinError(true);
+    }
+
+    if (!/.+@.+\.[A-Za-z]+$/.test(email)) {
+      setEmailError(true);
+      temp = true;
+    } else setEmailError(false);
+
+    if (phone.length !== 17 || phone.substr(3, 1) !== "7") {
       setPhoneError(true);
-      return;
+      temp = true;
     } else setPhoneError(false);
+
+    return temp ? false : true;
+  };
+
+  const getOtp = () => {
+    if (!validate()) return;
     setLoading(true);
     setTimer(90);
     api.authOtp
@@ -361,6 +416,8 @@ const Order = (props: any) => {
       .then((userContext) => {
         props.scrollToOrder(false);
         localStorage.setItem("userContext", JSON.stringify(userContext));
+        setToken(String(userContext.token?.accessToken));
+        localStorage.removeItem("processInstanceId");
         startProcess();
       })
       .catch((e: any) => {
@@ -407,32 +464,27 @@ const Order = (props: any) => {
         </Snackbar>
         <div className={classes.orderForm}>
           <Grid direction="column" container className={classes.innerOrderForm}>
-            <Grid item>
-              <BccTypography
-                type="h2"
-                weight="medium"
-                block
-                className={classes.titleForm}
-              >
-                {step === 1
-                  ? "Подтверждение номера телефона"
-                  : "Оставить заявку на кредит"}
-              </BccTypography>
-              <BccTypography
-                type="p1"
-                weight="medium"
-                block
-                className={classes.subTitleForm}
-              >
-                {step === 1
-                  ? "Введите полученный в SMS код для подтверждения контакта"
-                  : "Оставьте Ваши контактные данные и наш менеджер свяжется с Вами"}
-              </BccTypography>
-            </Grid>
-
             <BlockUi tag="div" blocking={isLoading}>
               {step === 0 ? (
                 <>
+                  <Grid item>
+                    <BccTypography
+                      type="h2"
+                      weight="medium"
+                      block
+                      className={classes.titleForm}
+                    >
+                      {t("order.title")}
+                    </BccTypography>
+                    <BccTypography
+                      type="p1"
+                      weight="medium"
+                      block
+                      className={classes.subTitleForm}
+                    >
+                      {t("order.subtitle")}
+                    </BccTypography>
+                  </Grid>
                   <Grid item>
                     <BccFormControl className={classes.radio}>
                       <BccRadioGroup
@@ -441,15 +493,15 @@ const Order = (props: any) => {
                         onChange={(e: any) => setType(e.target.value)}
                       >
                         <BccFormControlLabel
-                          value="ip"
-                          control={<BccRadio />}
-                          label="Индивидуальный предприниматель"
+                          value="0"
+                          control={<BccRadio disableRipple />}
+                          label={t("order.ip")}
                           labelPlacement="end"
                         />
                         <BccFormControlLabel
-                          value="ul"
-                          control={<BccRadio />}
-                          label="Юридическое лицо"
+                          value="1"
+                          control={<BccRadio disableRipple />}
+                          label={t("order.ul")}
                           labelPlacement="end"
                         />
                       </BccRadioGroup>
@@ -459,38 +511,28 @@ const Order = (props: any) => {
                     <BccInput
                       className={classes.inputStyle}
                       fullWidth
-                      label={
-                        type === "ul"
-                          ? "Наименование компании"
-                          : "ФИО Индивидуального предпринимателя"
-                      }
+                      label={type === "1" ? t("order.fioUl") : t("order.fioIp")}
                       variant="filled"
                       id="fio"
                       name="fio"
+                      helperText={fioError ? t("order.error") : ""}
+                      error={fioError ? true : false}
                       value={fio}
-                      onChange={(e: any) => setFio(e.target.value)}
+                      onChange={(e: any) => {
+                        setFio(e.target.value);
+                      }}
                     />
                   </Grid>
-                  <Grid item>
-                    <BccInput
-                      fullWidth={true}
-                      className={classes.inputStyle}
-                      label={type === "ul" ? "БИН*" : "ИИН*"}
-                      id="iin"
-                      name="iin"
-                      value={iin}
-                      onChange={(e: any) =>
-                        setIin(e.target.value.replace(/\D/g, "").substr(0, 12))
-                      }
-                      variant="filled"
-                    />
-                  </Grid>
+
                   <Grid item>
                     <BccInput
                       variant="filled"
                       fullWidth
                       label={t("order.phone") + "*"}
-                      onChange={(e: any) => setPhone(e.target.value)}
+                      onChange={(e: any) => {
+                        setPhone(e.target.value);
+                        phoneError && validate();
+                      }}
                       className={classes.inputStyle}
                       id="phone"
                       name="phone"
@@ -512,8 +554,14 @@ const Order = (props: any) => {
                       label={"Email*"}
                       id="email"
                       name="email"
+                      helperText={
+                        emailError ? `${t("order.error1")} email` : ""
+                      }
+                      error={emailError ? true : false}
                       value={email}
-                      onChange={(e: any) => setEmail(e.target.value)}
+                      onChange={(e: any) => {
+                        setEmail(e.target.value);
+                      }}
                       variant="filled"
                     />
                   </Grid>
@@ -521,19 +569,87 @@ const Order = (props: any) => {
                     <BccInput
                       fullWidth={true}
                       className={classes.inputStyle}
-                      label={"Сумма*"}
-                      id="sum"
-                      name="sum"
-                      value={sum}
-                      onChange={(e: any) => setSum(e.target.value)}
+                      label={
+                        type === "1"
+                          ? `${t("order.bin")}*`
+                          : `${t("order.iin")}*`
+                      }
+                      id="iin"
+                      name="iin"
+                      helperText={
+                        iinError && type === "1"
+                          ? `${t("order.error1")} ${t("order.bin")}`
+                          : iinError
+                          ? `${t("order.error1")} ${t("order.iin")}`
+                          : ""
+                      }
+                      error={iinError ? true : false}
+                      value={iin}
+                      onChange={(e: any) => {
+                        setIin(e.target.value.replace(/\D/g, "").substr(0, 12));
+                      }}
                       variant="filled"
                     />
+                  </Grid>
+                  <Grid item>
+                    <div className={classes.paymentWrap}>
+                      <div className={classes.sliderWrap}>
+                        <BccInput
+                          label={t("order.sum")}
+                          key="sum"
+                          value={
+                            sum
+                              .toString()
+                              .replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₸"
+                          }
+                          variant="filled"
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
+                          onChange={(e: any) =>
+                            +e.target.value.slice(0, -2).replace(/ /g, "") >
+                            40000000
+                              ? setSum(40000000)
+                              : +e.target.value.slice(0, -2).replace(/ /g, "") <
+                                1000000
+                              ? setSum(1000000)
+                              : setSum(
+                                  e.target.value.slice(0, -2).replace(/ /g, "")
+                                )
+                          }
+                          className={classes.input}
+                        />
+                        <BccSlider
+                          style={{
+                            left: 6,
+                            right: 6,
+                            width: "calc(100% - 12px)",
+                            bottom: -1,
+                            padding: 0,
+                            position: "absolute",
+                          }}
+                          min={1000000}
+                          max={40000000}
+                          step={100000}
+                          value={sum}
+                          valueLabelDisplay="off"
+                          defaultValue={sum}
+                          onChange={(e: any, val: any) =>
+                            setSum(val instanceof Array ? val[1] : val)
+                          }
+                        />
+                        <div className={classes.sliderRange}>
+                          <span>1 000 000</span>
+                          <span>40 000 000</span>
+                        </div>
+                      </div>
+                    </div>
                   </Grid>
                   <Grid item>
                     <BccInput
                       fullWidth={true}
                       className={classes.inputStyle}
-                      label={"Срок кредита"}
+                      label={t("order.period")}
                       id="period"
                       name="period"
                       value={period}
@@ -542,13 +658,13 @@ const Order = (props: any) => {
                       select
                     >
                       <MenuItem key={12} value={12}>
-                        12 месяцев
+                        12 {t("tabs.month")}
                       </MenuItem>
                       <MenuItem key={24} value={24}>
-                        24 месяцев
+                        24 {t("tabs.month")}
                       </MenuItem>
                       <MenuItem key={36} value={36}>
-                        36 месяцев
+                        36 {t("tabs.month")}
                       </MenuItem>
                     </BccInput>
                   </Grid>
@@ -569,15 +685,20 @@ const Order = (props: any) => {
                       </Grid>
                       <Grid item>
                         <BccTypography type="p3">
-                          Подтверждаю{" "}
+                          {t("order.agree")}{" "}
                           <BccLink
-                            href="http://bcc.kz/consent_rus.pdf"
+                            href={`http://bcc.kz/consent_${
+                              props.lang === "ru"
+                                ? "rus"
+                                : props.lang === "kz"
+                                ? "kaz"
+                                : "eng"
+                            }.pdf`}
                             target="_blank"
                           >
-                            согласие на сбор и обработку персональных данных
+                            {t("order.agree1")}
                           </BccLink>
-                          , включая получение информации и кредитного отчета с
-                          ТОО «Первое кредитное бюро» и ГБД ЮЛ.
+                          {t("order.agree2")}
                         </BccTypography>
                       </Grid>
                     </Grid>
@@ -614,71 +735,103 @@ const Order = (props: any) => {
                           onClick={() => getOtp()}
                           color="primary"
                         >
-                          Подать заявку
+                          {t("order.send")}
                         </BccButton>
                       </Grid>
                     </Grid>
                   </Grid>
                 </>
               ) : step === 1 ? (
-                <Grid item>
-                  <Grid
-                    container
-                    style={{ marginTop: "15px", alignItems: "center" }}
-                    spacing={4}
-                  >
-                    <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
-                      <BccInput
-                        variant="outlined"
-                        className={classes.code}
-                        margin="normal"
-                        fullWidth
-                        id="code"
-                        name="code"
-                        value={code}
-                        onChange={(e: any) =>
-                          setCode(
-                            e.target.value.replace(/\D/g, "").substr(0, 6)
-                          )
-                        }
-                        label={"Код подтверждения"}
-                      />
-                    </Grid>
-                    <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
-                      <BccButton
-                        onClick={() => onSubmitOtp()}
-                        variant="contained"
-                        className={classes.submit}
-                        disabled={!isValid()}
-                      >
-                        Отправить
-                      </BccButton>
-                    </Grid>
-                    {timer !== 0 ? (
-                      <Grid item>
-                        <BccTypography type="p3" className={classes.timer}>
-                          Отправить ещё через ({timer})
-                        </BccTypography>
+                <>
+                  <Grid item>
+                    <BccTypography
+                      type="h2"
+                      weight="medium"
+                      block
+                      className={classes.titleForm}
+                    >
+                      {t("order.title")}
+                    </BccTypography>
+                    <BccTypography
+                      type="p1"
+                      weight="medium"
+                      block
+                      className={classes.subTitleForm}
+                    >
+                      {t("order.subtitle")}
+                    </BccTypography>
+                  </Grid>
+                  <Grid item>
+                    <Grid
+                      container
+                      style={{ marginTop: "15px", alignItems: "center" }}
+                      spacing={4}
+                    >
+                      <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
+                        <BccInput
+                          variant="outlined"
+                          className={classes.code}
+                          margin="normal"
+                          fullWidth
+                          id="code"
+                          name="code"
+                          value={code}
+                          onChange={(e: any) =>
+                            setCode(
+                              e.target.value.replace(/\D/g, "").substr(0, 6)
+                            )
+                          }
+                          label={t("order.code")}
+                        />
                       </Grid>
-                    ) : (
-                      <Grid item>
+                      <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
                         <BccButton
-                          variant="text"
-                          className={classes.linkReSendSms}
-                          onClick={() => onReSend()}
+                          onClick={() => onSubmitOtp()}
+                          variant="contained"
+                          className={classes.submit}
+                          disabled={!isValid()}
                         >
-                          Отправить повторно
+                          Отправить
                         </BccButton>
                       </Grid>
-                    )}
+                      {timer !== 0 ? (
+                        <Grid item>
+                          <BccTypography type="p3" className={classes.timer}>
+                            {t("order.sendAfter")} ({timer})
+                          </BccTypography>
+                        </Grid>
+                      ) : (
+                        <Grid item>
+                          <BccButton
+                            variant="text"
+                            className={classes.linkReSendSms}
+                            onClick={() => onReSend()}
+                          >
+                            {t("order.sendAgain")}
+                          </BccButton>
+                        </Grid>
+                      )}
+                    </Grid>
                   </Grid>
-                </Grid>
+                </>
               ) : (
                 <Grid item>
                   <div className={classes.successForm}>
                     <img src="success.svg" alt="" />
-                    <div>{t("block_6.success_main")}</div>
-                    <span>{t("block_6.success_sms_main")}</span>
+                    <BccTypography block mb="16px" type="h5">
+                      {t("order.succesTitle")}
+                    </BccTypography>
+                    <BccTypography block type="p2l" mb="16px">
+                      {t("order.succesText")}
+                    </BccTypography>
+                    <BccButton
+                      href={`https://green.bcc.kz/login?processInstanceId=${processInstanceId}&taskDefinitionKey=application_form&token=${token}`}
+                      variant="contained"
+                      color="primary"
+                      className={classes.okBtn}
+                    >
+                      {t("order.ok")}
+                    </BccButton>
                   </div>
                 </Grid>
               )}

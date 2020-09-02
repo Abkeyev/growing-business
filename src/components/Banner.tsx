@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme: Theme) =>
         background: "linear-gradient(to top, #ffffff, #f9f6f3)",
       },
       innerContainer: {
+        position: "relative",
         margin: "0 auto",
         width: "100%",
         padding: "60px 20px 40px",
@@ -67,7 +68,11 @@ const useStyles = makeStyles((theme: Theme) =>
         position: "absolute",
         right: 20,
         top: 50,
-        color: "#141414",
+        color: "#000D1A",
+        paddingLeft: 7,
+        fontSize: 14,
+        backgroundColor: "white",
+        borderRadius: 8,
         "&:hover:not(.Mui-disabled):before": {
           borderBottom: 0,
         },
@@ -113,9 +118,13 @@ const useStyles = makeStyles((theme: Theme) =>
       openBtn: { minWidth: 300, fontSize: 18, fontWeight: "bold" },
       select: {
         position: "absolute",
-        right: 0,
-        top: 10,
-        color: "#141414",
+        right: 100,
+        top: 24,
+        color: "#000D1A",
+        paddingLeft: 7,
+        fontSize: 14,
+        backgroundColor: "white",
+        borderRadius: 8,
         "&:hover:not(.Mui-disabled):before": {
           borderBottom: 0,
         },
@@ -134,7 +143,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Banner = (props: any) => {
   const classes = useStyles({});
-  // const { t } = useTranslation();
+  const { t } = useTranslation();
 
   // const handleLangChange = (lang: any) => {
   //   props.changeLang(lang);
@@ -157,6 +166,9 @@ const Banner = (props: any) => {
     // });
     props.scrollToOrder();
   };
+  const handleLangChange = (lang: any) => {
+    props.changeLang(lang);
+  };
 
   // const onClickIB = (e: any) => {
   //   e.preventDefault();
@@ -175,15 +187,29 @@ const Banner = (props: any) => {
       <div className={classes.container}>
         <div className={classes.innerContainer}>
           <BccTypography type="h1" block className={classes.title}>
-            Растущий бизнес
+            {t("banner.title")}
           </BccTypography>
+          <Select
+            className={classes.select}
+            value={props.lang}
+            onChange={(e: any) => handleLangChange(e.target.value)}
+            inputProps={{
+              classes: {
+                icon: classes.icon,
+              },
+            }}
+          >
+            <MenuItem value="ru">РУС</MenuItem>
+            <MenuItem value="kz">КАЗ</MenuItem>
+            <MenuItem value="en">ENG</MenuItem>
+          </Select>
           <BccButton
             className={classes.openBtn}
             variant="contained"
             color="primary"
             onClick={(e: any) => goToOnline(e)}
           >
-            Подать заявку
+            {t("banner.button")}
           </BccButton>
         </div>
       </div>

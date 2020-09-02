@@ -399,7 +399,7 @@ const Tabs = (props: any) => {
             weight="medium"
             type="p2"
           >
-            Обзор
+            {t("tabs.1")}
           </BccTypography>
         </BccToggleButton>
         <BccToggleButton value="redemption">
@@ -408,7 +408,7 @@ const Tabs = (props: any) => {
             weight="medium"
             type="p2"
           >
-            Погашение
+            {t("tabs.2")}
           </BccTypography>
         </BccToggleButton>
         <BccToggleButton value="documents">
@@ -417,7 +417,7 @@ const Tabs = (props: any) => {
             weight="medium"
             type="p2"
           >
-            Документы
+            {t("tabs.3")}
           </BccTypography>
         </BccToggleButton>
         <BccToggleButton value="rates">
@@ -426,7 +426,7 @@ const Tabs = (props: any) => {
             weight="medium"
             type="p2"
           >
-            Тарифы
+            {t("tabs.4")}
           </BccTypography>
         </BccToggleButton>
       </BccToggleButtonGroup>
@@ -436,33 +436,29 @@ const Tabs = (props: any) => {
             <Grid item className={classes.item}>
               <img src={process.env.PUBLIC_URL + "/icons/tengeu.svg"} />
               <BccTypography type="p2" block className={classes.itemTitle}>
-                Максимальная сумма займа для для субъектов микро, малого и
-                среднего бизнеса - до 40 000 000 ₸
+                {t("tabs.1text1")}
               </BccTypography>
             </Grid>
             <Grid item className={classes.item}>
               <img src={process.env.PUBLIC_URL + "/icons/period.svg"} />
               <BccTypography type="p2" block className={classes.itemTitle}>
-                Срок кредитования - 12, 24 и 36 месяцев
+                {t("tabs.1text2")}
               </BccTypography>
             </Grid>
             <Grid item className={classes.item}>
               <img src={process.env.PUBLIC_URL + "/icons/tengee.svg"} />
               <BccTypography type="p2" block className={classes.itemTitle}>
-                Валюта – тенге.
+                {t("tabs.1text3")}
               </BccTypography>
             </Grid>
             <Grid item className={classes.item}>
               <img src={process.env.PUBLIC_URL + "/icons/contractt.svg"} />
               <BccTypography type="p2" block className={classes.itemTitle}>
-                Обеспечение:
-                <br /> - Квартира до 150 кв.м. в областных центрах РК
-                <br /> - Жилые дома до 350 кв.м. с земельным участком от 4 до 20
-                соток в областных центрах РК
-                <br /> - Коммерческая недвижимость до 200 кв.м. с земельным
-                участком от 4 до 20 соток в областных центрах РК
-                <br /> - Приобретаемые имущества, с отсрочкой о предоставлении в
-                залог
+                {t("tabs.1text40")}
+                <br /> {t("tabs.1text41")}
+                <br /> {t("tabs.1text42")}
+                <br /> {t("tabs.1text43")}
+                <br /> {t("tabs.1text44")}
               </BccTypography>
             </Grid>
           </Grid>
@@ -471,35 +467,33 @@ const Tabs = (props: any) => {
             <Grid item className={classes.item}>
               <img src={process.env.PUBLIC_URL + "/icons/roundperd.svg"} />
               <BccTypography type="p2" block className={classes.itemTitle}>
-                Вознаграждение - ежемесячно*
+                {t("tabs.2text1")}
               </BccTypography>
             </Grid>
             <Grid item className={classes.item}>
               <img src={process.env.PUBLIC_URL + "/icons/periodt.svg"} />
               <BccTypography type="p2" block className={classes.itemTitle}>
-                Основной долг - ежемесячно, равными долями*
+                {t("tabs.2text2")}
               </BccTypography>
             </Grid>
             <Grid item className={classes.item}>
               <img src={process.env.PUBLIC_URL + "/icons/givet.svg"} />
               <BccTypography type="p2" block className={classes.itemTitle}>
-                Очередной платеж для погашения автоматически списывается с
-                текущего счета в указанную в графике дату.
+                {t("tabs.2text3")}
               </BccTypography>
             </Grid>
             <Grid item className={classes.item}>
               <img src={process.env.PUBLIC_URL + "/icons/givet.svg"} />
               <BccTypography type="p2" block className={classes.itemTitle}>
-                Возможно досрочное погашение без штрафных санкций, с 7-го месяца
-                кредитования**
+                {t("tabs.2text4")}
               </BccTypography>
             </Grid>
             <Grid item>
               <BccTypography type="p2" weight="normal" block>
-                *возможно применение аннуитетного графика платежей
+                {t("tabs.2text01")}
               </BccTypography>
               <BccTypography type="p2" weight="normal" block>
-                ** в зависимости от сроков кредитования
+                {t("tabs.2text02")}
               </BccTypography>
             </Grid>
           </Grid>
@@ -519,7 +513,7 @@ const Tabs = (props: any) => {
                   weight="medium"
                   type="p2"
                 >
-                  Для индивидуальных предпринимателей
+                  {t("tabs.ip")}
                 </BccTypography>
               </BccToggleButton>
               <BccToggleButton value="ul">
@@ -528,30 +522,27 @@ const Tabs = (props: any) => {
                   weight="medium"
                   type="p2"
                 >
-                  Для юридических лиц
+                  {t("tabs.ul")}
                 </BccTypography>
               </BccToggleButton>
             </BccToggleButtonGroup>
             {docToggle === "ip" ? (
               <Grid container justify="space-between" className={classes.docs}>
-                {/* <Grid item>
-                  <img src={process.env.PUBLIC_URL + "/icons/pdf.svg"} />
-                  <BccLink target="_blank" href="https://www.bcc.kz/ip_kaz.pdf">
-                    Перечень документов [KZ]
-                  </BccLink>
-                </Grid> */}
                 <Grid item>
                   <img src={process.env.PUBLIC_URL + "/icons/pdf.svg"} />
-                  <BccLink target="_blank" href="https://www.bcc.kz/ip_rus.pdf">
-                    Перечень документов
+                  <BccLink
+                    target="_blank"
+                    href={`https://www.bcc.kz/ip_${
+                      props.lang === "ru"
+                        ? "rus"
+                        : props.lang === "kz"
+                        ? "kaz"
+                        : "eng"
+                    }.pdf`}
+                  >
+                    {t("tabs.doc1")}
                   </BccLink>
                 </Grid>
-                {/* <Grid item>
-                  <img src={process.env.PUBLIC_URL + "/icons/pdf.svg"} />
-                  <BccLink target="_blank" href="https://www.bcc.kz/ip_eng.pdf">
-                    Перечень документов [EN]
-                  </BccLink>
-                </Grid> */}
               </Grid>
             ) : (
               <Grid container justify="space-between" className={classes.docs}>
@@ -559,24 +550,45 @@ const Tabs = (props: any) => {
                   <img src={process.env.PUBLIC_URL + "/icons/pdf.svg"} />
                   <BccLink
                     target="_blank"
-                    href="https://www.bcc.kz/too_rus.pdf"
+                    href={`https://www.bcc.kz/too_${
+                      props.lang === "ru"
+                        ? "rus"
+                        : props.lang === "kz"
+                        ? "kaz"
+                        : "eng"
+                    }.pdf`}
                   >
-                    Перечень документов
+                    {t("tabs.doc1")}
                   </BccLink>
                 </Grid>
                 <Grid item>
                   <img src={process.env.PUBLIC_URL + "/icons/docFile.svg"} />
                   <BccLink
                     target="_blank"
-                    href="http://bcc.kz/declaration_rus.docx"
+                    href={`http://bcc.kz/declaration_${
+                      props.lang === "ru"
+                        ? "rus"
+                        : props.lang === "kz"
+                        ? "kaz"
+                        : "eng"
+                    }.docx`}
                   >
-                    Шаблон решения единственного участника
+                    {t("tabs.doc2")}
                   </BccLink>
                 </Grid>
                 <Grid item>
                   <img src={process.env.PUBLIC_URL + "/icons/docFile.svg"} />
-                  <BccLink target="_blank" href="http://bcc.kz/KAXXX_rus.docx">
-                    Шаблон протокола общего собрания учредителей
+                  <BccLink
+                    target="_blank"
+                    href={`http://bcc.kz/KAXXX_${
+                      props.lang === "ru"
+                        ? "rus"
+                        : props.lang === "kz"
+                        ? "kaz"
+                        : "eng"
+                    }.docx`}
+                  >
+                    {t("tabs.doc3")}
                   </BccLink>
                 </Grid>
               </Grid>
@@ -598,7 +610,7 @@ const Tabs = (props: any) => {
                   weight="medium"
                   type="p2"
                 >
-                  Средства ЕБРР
+                  {t("tabs.type1")}
                 </BccTypography>
               </BccToggleButton>
               <BccToggleButton value="ssb">
@@ -607,7 +619,7 @@ const Tabs = (props: any) => {
                   weight="medium"
                   type="p2"
                 >
-                  Собственные средства банка
+                  {t("tabs.type2")}
                 </BccTypography>
               </BccToggleButton>
             </BccToggleButtonGroup>
@@ -618,75 +630,69 @@ const Tabs = (props: any) => {
                   <BccTable aria-label="simple table">
                     <BccTableHead>
                       <BccTableRow>
-                        <BccTableCell>Название тарифа</BccTableCell>
-                        <BccTableCell>Срок</BccTableCell>
-                        <BccTableCell>Ценовые параметры</BccTableCell>
+                        <BccTableCell>{t("tabs.name")}</BccTableCell>
+                        <BccTableCell>{t("tabs.period")}</BccTableCell>
+                        <BccTableCell>{t("tabs.price")}</BccTableCell>
                       </BccTableRow>
                     </BccTableHead>
                     <BccTableBody className={classes.table}>
                       <BccTableRow>
-                        <BccTableCell>
-                          Ставка вознаграждения номинальная*:
-                        </BccTableCell>
+                        <BccTableCell>{t("tabs.name1")}</BccTableCell>
                         <BccTableCell>
                           <BccTableRow>
-                            <BccTableCell>12 месяцев</BccTableCell>
+                            <BccTableCell>12 {t("tabs.month")}</BccTableCell>
                           </BccTableRow>
                           <BccTableRow>
-                            <BccTableCell>24 месяцев</BccTableCell>
+                            <BccTableCell>24 {t("tabs.month")}</BccTableCell>
                           </BccTableRow>
                           <BccTableRow>
-                            <BccTableCell>36 месяцев</BccTableCell>
+                            <BccTableCell>36 {t("tabs.month")}</BccTableCell>
                           </BccTableRow>
                         </BccTableCell>
                         <BccTableCell>
                           <BccTableRow>
                             <BccTableCell>15%</BccTableCell>
-                            <BccTableCell>годовых</BccTableCell>
+                            <BccTableCell>{t("tabs.year")}</BccTableCell>
                           </BccTableRow>
                         </BccTableCell>
                       </BccTableRow>
                       <BccTableRow>
-                        <BccTableCell>ГЭСВ</BccTableCell>
+                        <BccTableCell>{t("tabs.name2")}</BccTableCell>
                         <BccTableCell>
                           <BccTableRow>
-                            <BccTableCell>12 месяцев</BccTableCell>
+                            <BccTableCell>12 {t("tabs.month")}</BccTableCell>
                           </BccTableRow>
                           <BccTableRow>
-                            <BccTableCell>24 месяцев</BccTableCell>
+                            <BccTableCell>24 {t("tabs.month")}</BccTableCell>
                           </BccTableRow>
                           <BccTableRow>
-                            <BccTableCell>36 месяцев</BccTableCell>
+                            <BccTableCell>36 {t("tabs.month")}</BccTableCell>
                           </BccTableRow>
                         </BccTableCell>
                         <BccTableCell>
                           <BccTableRow>
                             <BccTableCell>16,5%</BccTableCell>
-                            <BccTableCell>годовых</BccTableCell>
+                            <BccTableCell>{t("tabs.year")}</BccTableCell>
                           </BccTableRow>
                         </BccTableCell>
                       </BccTableRow>
                       <BccTableRow>
-                        <BccTableCell>Пеня за просрочку</BccTableCell>
+                        <BccTableCell>{t("tabs.name3")}</BccTableCell>
                         <BccTableCell></BccTableCell>
                         <BccTableCell>
                           <BccTableRow>
                             <BccTableCell>0,2%</BccTableCell>
-                            <BccTableCell>
-                              в день от суммы просрочки
-                            </BccTableCell>
+                            <BccTableCell>{t("tabs.period1")}</BccTableCell>
                           </BccTableRow>
                         </BccTableCell>
                       </BccTableRow>
                       <BccTableRow>
-                        <BccTableCell>
-                          Комиссия за организацию займа*
-                        </BccTableCell>
+                        <BccTableCell>{t("tabs.name4")}</BccTableCell>
                         <BccTableCell></BccTableCell>
                         <BccTableCell>
                           <BccTableRow>
                             <BccTableCell>0,5%</BccTableCell>
-                            <BccTableCell>от суммы кредита</BccTableCell>
+                            <BccTableCell>{t("tabs.period2")}</BccTableCell>
                           </BccTableRow>
                         </BccTableCell>
                       </BccTableRow>
@@ -699,10 +705,7 @@ const Tabs = (props: any) => {
                   weight="normal"
                   block
                 >
-                  * При включении в Государственную программу поддержки
-                  предпринимательства “Дорожная карта бизнеса - 2025”
-                  номинальная ставка вознаграждения будет составлять 14%
-                  годовых, при этом комиссия за организацию займа не взимается.
+                  {t("tabs.add")}
                 </BccTypography>
                 <div className={classes.tarifDoc}>
                   <img src={process.env.PUBLIC_URL + "/icons/docFile.svg"} />
@@ -710,7 +713,7 @@ const Tabs = (props: any) => {
                     target="_blank"
                     href="https://docs.google.com/document/d/1bN-Kb4jFx04EoLqixMd0E-8g9TeJAE9edaazNl60Sx0/edit"
                   >
-                    Критерии для получения займа по средствам ЕБРР
+                    {t("tabs.doc")}
                   </BccLink>
                 </div>
               </>
@@ -719,25 +722,23 @@ const Tabs = (props: any) => {
                 <BccTable aria-label="simple table">
                   <BccTableHead>
                     <BccTableRow>
-                      <BccTableCell>Название тарифа</BccTableCell>
-                      <BccTableCell>Срок</BccTableCell>
-                      <BccTableCell>Ценовые параметры</BccTableCell>
+                      <BccTableCell>{t("tabs.name")}</BccTableCell>
+                      <BccTableCell>{t("tabs.period")}</BccTableCell>
+                      <BccTableCell>{t("tabs.price")}</BccTableCell>
                     </BccTableRow>
                   </BccTableHead>
                   <BccTableBody className={classes.table}>
                     <BccTableRow>
-                      <BccTableCell>
-                        Ставка вознаграждения номинальная*:
-                      </BccTableCell>
+                      <BccTableCell>{t("tabs.name1")}</BccTableCell>
                       <BccTableCell>
                         <BccTableRow>
-                          <BccTableCell>12 месяцев</BccTableCell>
+                          <BccTableCell>12 {t("tabs.month")}</BccTableCell>
                         </BccTableRow>
                         <BccTableRow>
-                          <BccTableCell>24 месяцев</BccTableCell>
+                          <BccTableCell>24 {t("tabs.month")}</BccTableCell>
                         </BccTableRow>
                         <BccTableRow>
-                          <BccTableCell>36 месяцев</BccTableCell>
+                          <BccTableCell>36 {t("tabs.month")}</BccTableCell>
                         </BccTableRow>
                       </BccTableCell>
                       <BccTableCell>
@@ -753,21 +754,21 @@ const Tabs = (props: any) => {
                               <BccTableCell>19%</BccTableCell>
                             </BccTableRow>
                           </BccTableCell>
-                          <BccTableCell>годовых</BccTableCell>
+                          <BccTableCell>{t("tabs.year")}</BccTableCell>
                         </BccTableRow>
                       </BccTableCell>
                     </BccTableRow>
                     <BccTableRow>
-                      <BccTableCell>ГЭСВ</BccTableCell>
+                      <BccTableCell>{t("tabs.name2")}</BccTableCell>
                       <BccTableCell>
                         <BccTableRow>
-                          <BccTableCell>12 месяцев</BccTableCell>
+                          <BccTableCell>12 {t("tabs.month")}</BccTableCell>
                         </BccTableRow>
                         <BccTableRow>
-                          <BccTableCell>24 месяцев</BccTableCell>
+                          <BccTableCell>24 {t("tabs.month")}</BccTableCell>
                         </BccTableRow>
                         <BccTableRow>
-                          <BccTableCell>36 месяцев</BccTableCell>
+                          <BccTableCell>36 {t("tabs.month")}</BccTableCell>
                         </BccTableRow>
                       </BccTableCell>
                       <BccTableCell>
@@ -783,29 +784,27 @@ const Tabs = (props: any) => {
                               <BccTableCell>21,2%</BccTableCell>
                             </BccTableRow>
                           </BccTableCell>
-                          <BccTableCell>годовых</BccTableCell>
+                          <BccTableCell>{t("tabs.year")}</BccTableCell>
                         </BccTableRow>
                       </BccTableCell>
                     </BccTableRow>
                     <BccTableRow>
-                      <BccTableCell>Пеня за просрочку</BccTableCell>
+                      <BccTableCell>{t("tabs.name3")}</BccTableCell>
                       <BccTableCell></BccTableCell>
                       <BccTableCell>
                         <BccTableRow>
                           <BccTableCell>0,2%</BccTableCell>
-                          <BccTableCell>в день от суммы просрочки</BccTableCell>
+                          <BccTableCell>{t("tabs.period1")}</BccTableCell>
                         </BccTableRow>
                       </BccTableCell>
                     </BccTableRow>
                     <BccTableRow>
-                      <BccTableCell>
-                        Комиссия за организацию займа*
-                      </BccTableCell>
+                      <BccTableCell>{t("tabs.name4")}</BccTableCell>
                       <BccTableCell></BccTableCell>
                       <BccTableCell>
                         <BccTableRow>
                           <BccTableCell>0,5%</BccTableCell>
-                          <BccTableCell>от суммы кредита</BccTableCell>
+                          <BccTableCell>{t("tabs.period2")}</BccTableCell>
                         </BccTableRow>
                       </BccTableCell>
                     </BccTableRow>
