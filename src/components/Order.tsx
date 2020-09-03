@@ -18,6 +18,7 @@ import MaskedInput from "react-maskedinput";
 import BlockUi from "react-block-ui";
 import { Alert as MuiAlert } from "@material-ui/lab";
 import { useTranslation } from "react-i18next";
+import { GrowingBusinessBaseModel } from "../api/Model";
 const webConfigEnv = (window as any).env;
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -333,6 +334,7 @@ const Order = (props: any) => {
         env: {
           production: webConfigEnv.PRODUCTION === "1",
         },
+        ...new GrowingBusinessBaseModel(),
         requestInfo: {
           type,
           fio: fio,
