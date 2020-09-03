@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/growing-business/static/css/main.aa1da0c2.chunk.css",
-    "main.js": "/growing-business/static/js/main.1841b688.chunk.js",
-    "main.js.map": "/growing-business/static/js/main.1841b688.chunk.js.map",
-    "runtime-main.js": "/growing-business/static/js/runtime-main.7c44e5c2.js",
-    "runtime-main.js.map": "/growing-business/static/js/runtime-main.7c44e5c2.js.map",
-    "static/js/2.ed1c1613.chunk.js": "/growing-business/static/js/2.ed1c1613.chunk.js",
-    "static/js/2.ed1c1613.chunk.js.map": "/growing-business/static/js/2.ed1c1613.chunk.js.map",
-    "index.html": "/growing-business/index.html",
-    "precache-manifest.5ea763ccdb45d4ccc4cea8be370b4962.js": "/growing-business/precache-manifest.5ea763ccdb45d4ccc4cea8be370b4962.js",
-    "service-worker.js": "/growing-business/service-worker.js",
-    "static/css/main.aa1da0c2.chunk.css.map": "/growing-business/static/css/main.aa1da0c2.chunk.css.map",
-    "static/js/2.ed1c1613.chunk.js.LICENSE": "/growing-business/static/js/2.ed1c1613.chunk.js.LICENSE"
+    "main.css": "/product/growing-business/static/css/main.aa1da0c2.chunk.css",
+    "main.js": "/product/growing-business/static/js/main.67317c34.chunk.js",
+    "main.js.map": "/product/growing-business/static/js/main.67317c34.chunk.js.map",
+    "runtime-main.js": "/product/growing-business/static/js/runtime-main.9ec884dd.js",
+    "runtime-main.js.map": "/product/growing-business/static/js/runtime-main.9ec884dd.js.map",
+    "static/js/2.ed1c1613.chunk.js": "/product/growing-business/static/js/2.ed1c1613.chunk.js",
+    "static/js/2.ed1c1613.chunk.js.map": "/product/growing-business/static/js/2.ed1c1613.chunk.js.map",
+    "index.html": "/product/growing-business/index.html",
+    "precache-manifest.64ba0817650bcdf6c1be82f54a6a70d9.js": "/product/growing-business/precache-manifest.64ba0817650bcdf6c1be82f54a6a70d9.js",
+    "service-worker.js": "/product/growing-business/service-worker.js",
+    "static/css/main.aa1da0c2.chunk.css.map": "/product/growing-business/static/css/main.aa1da0c2.chunk.css.map",
+    "static/js/2.ed1c1613.chunk.js.LICENSE": "/product/growing-business/static/js/2.ed1c1613.chunk.js.LICENSE"
   },
   "entrypoints": [
-    "static/js/runtime-main.7c44e5c2.js",
+    "static/js/runtime-main.9ec884dd.js",
     "static/js/2.ed1c1613.chunk.js",
     "static/css/main.aa1da0c2.chunk.css",
-    "static/js/main.1841b688.chunk.js"
+    "static/js/main.67317c34.chunk.js"
   ]
 }

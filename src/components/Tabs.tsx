@@ -711,7 +711,13 @@ const Tabs = (props: any) => {
                   <img src={process.env.PUBLIC_URL + "/icons/docFile.svg"} />
                   <BccLink
                     target="_blank"
-                    href="https://docs.google.com/document/d/1bN-Kb4jFx04EoLqixMd0E-8g9TeJAE9edaazNl60Sx0/edit"
+                    href={`https://www.bcc.kz/ebrr_${
+                      props.lang === "ru"
+                        ? "rus"
+                        : props.lang === "kz"
+                        ? "kaz"
+                        : "eng"
+                    }.pdf`}
                   >
                     {t("tabs.doc")}
                   </BccLink>
