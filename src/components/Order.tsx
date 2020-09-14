@@ -827,7 +827,7 @@ const Order = (props: any) => {
                       {t("order.succesText")}
                     </BccTypography>
                     <BccButton
-                      href={`https://green.bcc.kz/login?processInstanceId=${processInstanceId}&taskDefinitionKey=application_form&token=${token}`}
+                      href={`http://localhost:3001/login?processInstanceId=${processInstanceId}&taskDefinitionKey=application_form&token=${token}`}
                       variant="contained"
                       color="primary"
                       className={classes.okBtn}
