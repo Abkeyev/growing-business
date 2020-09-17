@@ -6,10 +6,8 @@ export class CodeName {
   key?: string;
   prefix?: string;
 }
-
 export class Address {
   constructor() {
-    this.country = "";
     this.type = new CodeName();
     this.region = new CodeName();
     this.district = new CodeName();
@@ -55,6 +53,11 @@ export enum DecisionType {
   APPROVE,
 }
 
+export const TypeOfCommunication = [
+  { code: "ALL", value: "Все коммуникации" },
+  { code: "PART", value: "Частичные коммуникации" },
+];
+
 export interface RequestInfo {
   type?: Type;
   fio?: string;
@@ -70,16 +73,39 @@ export class BusinessInfo {
   address: string = "";
   numberOfEmloyees: number = 0;
   purpose: string = "";
+  wantGovProgram: boolean = false;
+  govProgram: string = "";
+}
+
+export class Owner {
+  fio: string = "";
+  iin: string = "";
+  clientCode: string = "";
+}
+
+export const EstimationType = [
+  "Сравнительный метод",
+  "Сравнительный метод",
+  "Доходный метод",
+];
+
+export class Estimation {
+  contractNumber: string = "";
+  contractDate: Date | string = "";
+  contractDateString: string = "";
+  estimatorName: string = "";
+  priceOfEstimation: string = "";
+  currency: string = "";
+  reductionFactor: number = 0;
+  priceOfProvision: number = 0;
+  type: string = "";
 }
 
 export class Provision {
   type: string = "";
   description: string = "";
-  iin: string = "";
-  price: string = "";
-  currency: string = "";
-  date: Date | string = "";
-  dateString: string = "";
+  owner: Owner[] = [new Owner()];
+  estimation: Estimation = new Estimation();
   wallMaterial: string = "";
   commonArea: number = 0;
   sectionArea: number = 0;
@@ -88,6 +114,14 @@ export class Provision {
   buildYear: Date | string = "";
   buildYearString: string = "";
   address: Address = { ...new Address(), country: "Казахстан" };
+  cadastralNumber: string = "";
+  numberOfFloors: number = 0;
+  floor: number = 0;
+  numberOfRooms: number = 0;
+  typeOfCommunication: string = "";
+  hasDiscrepancies: boolean = false;
+  discrepancies: string = "";
+  registeringOrg: string = "";
 }
 
 export class DigitalFinance {
