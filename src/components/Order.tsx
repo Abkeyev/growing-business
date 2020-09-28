@@ -342,6 +342,7 @@ const Order = (props: any) => {
           phone: formatPhoneNumber(),
           email: email,
           amount: sum,
+          amountCache: sum,
           period: period,
         },
       })
@@ -827,7 +828,7 @@ const Order = (props: any) => {
                       {t("order.succesText")}
                     </BccTypography>
                     <BccButton
-                      href={`http://localhost:3002/login?processInstanceId=${processInstanceId}&taskDefinitionKey=application_form&token=${token}`}
+                      href={`http://localhost:3001/login?processInstanceId=${processInstanceId}&taskDefinitionKey=application_form&token=${token}`}
                       variant="contained"
                       color="primary"
                       className={classes.okBtn}
