@@ -1,10 +1,12 @@
 export class CodeName {
-  code?: string;
+  code?: string | number;
   name?: string;
   value?: string;
   fromDate?: string;
-  key?: string;
+  key?: string | number;
   prefix?: string;
+  type?: string;
+  provision?: boolean;
 }
 export class Address {
   constructor() {
@@ -41,6 +43,7 @@ export class Address {
   streetType?: CodeName;
   mdstype?: string;
 }
+
 export const TypeOfCommunication = [
   { code: "ALL", value: "Все коммуникации" },
   { code: "PART", value: "Частичные коммуникации" },
@@ -53,71 +56,186 @@ export const RepaymentMethod = [
 
 export const PurposeOfFinance = [
   {
+    key: 0,
     code: 0,
     value: "Затраты на внутрихозяйственные нужды",
     type: "investment",
+    provision: true,
   },
-  { code: 1, value: "Приобретение оборудования", type: "internalEcoNeed" },
-  { code: 2, value: "Приобретение транспорта", type: "internalEcoNeed" },
   {
+    key: 1,
+    code: 0,
+    value: "Затраты на внутрихозяйственные нужды",
+    type: "investment",
+    provision: false,
+  },
+  {
+    key: 2,
+    code: 1,
+    value: "Приобретение оборудования",
+    type: "internalEcoNeed",
+    provision: true,
+  },
+  {
+    key: 3,
+    code: 2,
+    value: "Приобретение транспорта",
+    type: "internalEcoNeed",
+    provision: true,
+  },
+  {
+    key: 4,
     code: 3,
     value: "Приобретение жилой недвижимости",
     type: "internalEcoNeed",
+    provision: true,
   },
   {
+    key: 5,
     code: 4,
     value: "Приобретение коммерческой недвижимости",
     type: "internalEcoNeed",
+    provision: true,
   },
   {
+    key: 6,
     code: 5,
     value: "На строительство коммерческой недвижимости",
     type: "internalEcoNeed",
+    provision: true,
   },
-  { code: 6, value: "На проведение ремонта", type: "internalEcoNeed" },
-];
+  {
+    key: 7,
+    code: 6,
+    value: "На проведение ремонта",
+    type: "internalEcoNeed",
+    provision: true,
+  },
+] as CodeName[];
 
 export const GovProgram = [
-  { code: 0, value: "За счет средств ЕБРР", type: "EBRR" },
-  { code: 1, value: "За счет средств ЕБРР + субсидирование", type: "EBRR" },
   {
+    key: 0,
+    code: 0,
+    value: "За счет средств ЕБРР",
+    type: "EBRR",
+    provision: true,
+  },
+  {
+    key: 1,
+    code: 1,
+    value: "За счет средств ЕБРР + субсидирование",
+    type: "EBRR",
+    provision: true,
+  },
+  {
+    key: 2,
     code: 2,
     value: "За счет средств ЕБРР + гарантироние АО «ФРП «ДАМУ»",
     type: "EBRR",
+    provision: true,
   },
   {
+    key: 3,
     code: 3,
     value:
       "За счет средств ЕБРР + субсидирование и гарантирование АО «ФРП «ДАМУ»",
     type: "EBRR",
+    provision: true,
   },
-];
+  {
+    key: 4,
+    code: 3,
+    value:
+      "За счет средств ЕБРР + субсидирование и гарантирование АО «ФРП «ДАМУ»",
+    type: "EBRR",
+    provision: false,
+  },
+  {
+    key: 5,
+    code: 4,
+    value:
+      "За счет собственных средств Банка + субсидирование и гарантирование АО «ФРП «ДАМУ»",
+    type: "SS",
+    provision: true,
+  },
+  {
+    key: 6,
+    code: 4,
+    value:
+      "За счет собственных средств Банка + субсидирование и гарантирование АО «ФРП «ДАМУ»",
+    type: "SS",
+    provision: false,
+  },
+] as CodeName[];
 
 export const GovProgramWithFemale = [
   ...GovProgram,
-  { code: 4, value: "За счет средств ЕБРР «Женщины в бизнесе»", type: "EBRR" },
   {
+    key: 7,
     code: 5,
-    value: "За счет средств ЕБРР «Женщины в бизнесе» + субсидирование",
+    value: "За счет средств ЕБРР «Женщины в бизнесе»",
     type: "EBRR",
+    provision: true,
   },
   {
+    key: 8,
     code: 6,
+    value: "За счет средств ЕБРР «Женщины в бизнесе» + субсидирование",
+    type: "EBRR",
+    provision: true,
+  },
+  {
+    key: 9,
+    code: 7,
     value:
       "За счет средств ЕБРР «Женщины в бизнесе» + гарантироние АО «ФРП «ДАМУ»",
     type: "EBRR",
+    provision: true,
   },
   {
-    code: 7,
+    key: 10,
+    code: 8,
     value:
       "За счет средств ЕБРР «Женщины в бизнесе» + субсидирование и гарантирование АО «ФРП«ДАМУ»",
     type: "EBRR",
+    provision: true,
+  },
+  {
+    key: 11,
+    code: 8,
+    value:
+      "За счет средств ЕБРР «Женщины в бизнесе» + субсидирование и гарантирование АО «ФРП«ДАМУ»",
+    type: "EBRR",
+    provision: false,
   },
 ];
 
 export const MaxSumPurposeProgram = [
-  { purpose: "investment", program: "EBRR", sum: 5000000 },
-  { purpose: "internalEcoNeed", program: "EBRR", sum: 20000000 },
+  {
+    purpose: "investment",
+    provision: false,
+    program: "EBRR",
+    sum: 5000000,
+  },
+  {
+    purpose: "investment",
+    provision: true,
+    program: "EBRR",
+    sum: 40000000,
+  },
+  {
+    purpose: "internalEcoNeed",
+    provision: true,
+    program: "EBRR",
+    sum: 40000000,
+  },
+  {
+    purpose: "internalEcoNeed",
+    provision: false,
+    program: "EBRR",
+    sum: 40000000,
+  },
 ];
 
 export const TypeOfCalculationIncome = [
@@ -206,7 +324,7 @@ export class Estimation {
   contractDate: Date | string = "";
   contractDateString: string = "";
   estimatorName: string = "";
-  priceOfEstimation: string = "";
+  priceOfEstimation: number = 0;
   currency: string = "";
   reductionFactor: number = 0;
   priceOfProvision: number = 0;
@@ -233,7 +351,7 @@ export class Provision {
   typeOfCommunication: string = "";
   hasDiscrepancies: boolean = false;
   discrepancies: string = "";
-  registeringOrg: string = "";
+  registeringRgp: CodeName = new CodeName();
 }
 
 export class DigitalFinance {
@@ -263,4 +381,6 @@ export class GrowingBusinessBaseModel {
   status?: string = "Одобрен";
   hasProvision: boolean = true;
   programCriteriaChecked?: string;
+  couldCall?: boolean = true;
+  otpRejectDecision?: string;
 }
