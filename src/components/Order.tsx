@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, MenuItem, Snackbar } from "@material-ui/core";
+import { Grid, MenuItem, Snackbar, InputAdornment } from "@material-ui/core";
 import {
   BccTypography,
   BccCheckbox,
@@ -600,26 +600,26 @@ const Order = (props: any) => {
                         <BccInput
                           label={t("order.sum")}
                           key="sum"
-                          value={
-                            sum
-                              .toString()
-                              .replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₸"
-                          }
+                          value={sum
+                            .toString()
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
                           variant="filled"
                           InputLabelProps={{
                             shrink: true,
                           }}
-                          onChange={(e: any) =>
-                            +e.target.value.slice(0, -2).replace(/ /g, "") >
-                            40000000
-                              ? setSum(40000000)
-                              : +e.target.value.slice(0, -2).replace(/ /g, "") <
-                                1000000
-                              ? setSum(1000000)
-                              : setSum(
-                                  e.target.value.slice(0, -2).replace(/ /g, "")
-                                )
-                          }
+                          onChange={(e: any) => {
+                            const result = parseInt(
+                              e.target.value.split(" ").join("")
+                            );
+                            if (result <= 40000000) {
+                              setSum(result);
+                            }
+                          }}
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">₸</InputAdornment>
+                            ),
+                          }}
                           className={classes.input}
                         />
                         <BccSlider
@@ -828,7 +828,7 @@ const Order = (props: any) => {
                       {t("order.succesText")}
                     </BccTypography>
                     <BccButton
-                      href={`http://localhost:3000/login?processInstanceId=${processInstanceId}&taskDefinitionKey=application_form&token=${token}`}
+                      href={`http://10.20.52.64:3001/login?processInstanceId=${processInstanceId}&taskDefinitionKey=application_form&token=${token}`}
                       variant="contained"
                       color="primary"
                       className={classes.okBtn}

@@ -111,7 +111,7 @@ export const PurposeOfFinance = [
     type: "internalEcoNeed",
     provision: true,
   },
-] as CodeName[];
+];
 
 export const GovProgram = [
   {
@@ -157,17 +157,9 @@ export const GovProgram = [
     value:
       "За счет собственных средств Банка + субсидирование и гарантирование АО «ФРП «ДАМУ»",
     type: "SS",
-    provision: true,
-  },
-  {
-    key: 6,
-    code: 4,
-    value:
-      "За счет собственных средств Банка + субсидирование и гарантирование АО «ФРП «ДАМУ»",
-    type: "SS",
     provision: false,
   },
-] as CodeName[];
+];
 
 export const GovProgramWithFemale = [
   ...GovProgram,
@@ -304,6 +296,7 @@ export class BusinessInfo {
   wantGovProgram: boolean = false;
   govProgram: CodeName = new CodeName();
   agreeProgrammCriteria: boolean = false;
+  dependentChilds: number = 0;
 }
 
 export class Owner {
@@ -311,13 +304,12 @@ export class Owner {
   iin: string = "";
   phone?: string = "";
   clientCode: string = "";
+  isMarried?: boolean = false;
+  isAlreadyExistIIN?: boolean = false;
+  isAlreadyExistPhone?: boolean = false;
 }
 
-export const EstimationType = [
-  "Сравнительный метод",
-  "Сравнительный метод",
-  "Доходный метод",
-];
+export const EstimationType = ["Сравнительный метод", "Доходный метод"];
 
 export class Estimation {
   contractNumber: string = "";
@@ -325,7 +317,7 @@ export class Estimation {
   contractDateString: string = "";
   estimatorName: string = "";
   priceOfEstimation: number = 0;
-  currency: string = "";
+  currency: string = "KZT";
   reductionFactor: number = 0;
   priceOfProvision: number = 0;
   type: string = "";
@@ -380,7 +372,8 @@ export class GrowingBusinessBaseModel {
   lawyer = new Lawyer();
   status?: string = "Одобрен";
   hasProvision: boolean = true;
-  programCriteriaChecked?: string;
+  programCriteriaSatisfied?: boolean;
+  programCriteriaNotSatisfiedItems?: string[];
   couldCall?: boolean = true;
   otpRejectDecision?: string;
 }
