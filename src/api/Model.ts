@@ -291,12 +291,12 @@ export class BusinessInfo {
   description: string = "";
   hasLicense: boolean = false;
   address: string = "";
-  numberOfEmloyees: number = 0;
+  numberOfEmloyees?: number;
   purpose: CodeName = new CodeName();
   wantGovProgram: boolean = false;
   govProgram: CodeName = new CodeName();
   agreeProgrammCriteria: boolean = false;
-  dependentChilds: number = 0;
+  dependentChilds?: number;
 }
 
 export class Owner {
@@ -316,10 +316,10 @@ export class Estimation {
   contractDate: Date | string = "";
   contractDateString: string = "";
   estimatorName: string = "";
-  priceOfEstimation: number = 0;
+  priceOfEstimation?: number;
   currency: string = "KZT";
-  reductionFactor: number = 0;
-  priceOfProvision: number = 0;
+  reductionFactor?: number;
+  priceOfProvision?: number;
   type: string = "";
 }
 
@@ -329,17 +329,17 @@ export class Provision {
   owners: Owner[] = [new Owner()];
   estimation: Estimation = new Estimation();
   wallMaterial: CodeName = new CodeName();
-  commonArea: number = 0;
-  sectionArea: number = 0;
-  kitchenArea: number = 0;
+  commonArea?: number;
+  sectionArea?: number;
+  kitchenArea?: number;
   residentialComplex: string = "";
   buildYear: string = "";
   buildYearString: string = "";
   address: Address = { ...new Address(), country: "Казахстан" };
   cadastralNumber: string = "";
-  numberOfFloors: number = 0;
-  floor: number = 0;
-  numberOfRooms: number = 0;
+  numberOfFloors?: number;
+  floor?: number;
+  numberOfRooms?: number;
   typeOfCommunication: string = "";
   hasDiscrepancies: boolean = false;
   discrepancies: string = "";
@@ -353,9 +353,9 @@ export class DigitalFinance {
 
 export class InOutCome {
   period: string = "";
-  inCome: number = 0;
-  tax: number = 0;
-  outCome: number = 0;
+  inCome?: number;
+  tax?: number;
+  outCome?: number;
 }
 
 export class Lawyer {
