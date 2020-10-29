@@ -348,7 +348,7 @@ export class Provision {
 
 export class DigitalFinance {
   type: CodeName = new CodeName();
-  inOutCome: InOutCome[] = [new InOutCome()];
+  inOutComes: InOutCome[] = [new InOutCome()];
 }
 
 export class InOutCome {
@@ -367,7 +367,7 @@ export class Lawyer {
 export class GrowingBusinessBaseModel {
   requestInfo?: RequestInfo;
   businessInfo: BusinessInfo = new BusinessInfo();
-  provision: Provision[] = [new Provision()];
+  provisions: Provision[] = [new Provision()];
   digitalFinance: DigitalFinance = new DigitalFinance();
   lawyer = new Lawyer();
   status?: string = "Одобрен";
