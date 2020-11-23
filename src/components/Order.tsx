@@ -14,12 +14,13 @@ import {
 } from "./BccComponents";
 import api from "../api/Api";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import MaskedInput from "react-maskedinput";
+import InputMask from "react-input-mask";
 import BlockUi from "react-block-ui";
 import { Alert as MuiAlert } from "@material-ui/lab";
 import { useTranslation } from "react-i18next";
 import { GrowingBusinessBaseModel } from "../api/Model";
 const webConfigEnv = (window as any).env;
+const data = require("../data.json");
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -30,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) =>
       container: {
         margin: "0 auto",
         boxSizing: "border-box",
-        padding: "80px 20px",
+        padding: "20px",
       },
       title: {
         marginBottom: 40,
@@ -185,6 +186,16 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: 16,
       color: "#4D565F",
     },
+    sumInput: {
+      "& > div": {
+        borderColor: "#f44336!important",
+      },
+      "& > p": {
+        position: "absolute",
+        bottom: -40,
+        color: "#f44336",
+      },
+    },
     linkReSendSms: {
       color: "#3F0259",
       fontSize: 16,
@@ -247,10 +258,11 @@ const BccMaskedInput = (props: TextMaskCustomProps) => {
   const { inputRef, ...other } = props;
 
   return (
-    <MaskedInput
+    <InputMask
       {...other}
       ref={(ref: any) => inputRef(ref ? ref.inputElement : null)}
-      mask="+7(111) 111 11 11"
+      mask="+7(999) 999 99 99"
+      maskChar=""
       placeholder={"+7(707) 707 77 77"}
     />
   );
@@ -280,21 +292,25 @@ const cities = [
 
 const Order = (props: any) => {
   const classes = useStyles({});
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [fio, setFio] = React.useState("");
   const [phone, setPhone] = React.useState("");
   const [step, setStep] = React.useState(0);
   const [email, setEmail] = React.useState("");
-  const [sum, setSum] = React.useState(1000000);
+  const [sum, setSum] = React.useState("150000");
+  const [minSum, setMinSum] = React.useState(150000);
+  const [maxSum, setMaxSum] = React.useState(5000000);
   const [period, setPeriod] = React.useState("");
   const [iin, setIin] = React.useState("");
   const [city, setCity] = React.useState("");
+  const [zalog, setZalog] = React.useState("0");
   const [type, setType] = React.useState("0");
   const [isLoading, setLoading] = React.useState(false);
   const [phoneError, setPhoneError] = React.useState<boolean>(false);
   const [fioError, setFioError] = React.useState<boolean>(false);
   const [iinError, setIinError] = React.useState<boolean>(false);
   const [emailError, setEmailError] = React.useState<boolean>(false);
+  const [sumError, setSumError] = React.useState<boolean>(false);
   const [openError, setOpenError] = React.useState(false);
   const [agree, setAgree] = React.useState<boolean>(true);
   const [code, setCode] = React.useState("");
@@ -311,6 +327,10 @@ const Order = (props: any) => {
     return () => clearInterval(timeOut);
   }, [timer]);
 
+  React.useEffect(() => {
+    api.kato.getKatoChildren("710000000").then((res) => console.log(res));
+  }, []);
+
   const formatPhoneNumber = () => {
     let res = phone;
     if (phone.slice(0, 1) === "8") res = "+7" + phone.slice(1);
@@ -319,7 +339,15 @@ const Order = (props: any) => {
 
   const isValid = () => {
     if (step === 0) {
-      return period !== "" && agree;
+      return (
+        fio !== "" &&
+        email !== "" &&
+        period !== "" &&
+        iin.replace(/ /g, "").length === 12 &&
+        phone.replace("_", "").length === 17 &&
+        agree &&
+        ((zalog === "0" && city !== "") || zalog !== "0")
+      );
     } else if (step === 1) return code.length === 6;
     else return true;
   };
@@ -327,6 +355,15 @@ const Order = (props: any) => {
   const handleClose = () => {
     setOpenError(false);
   };
+
+  function getUrlParameter(name: string) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+    var results = regex.exec(window.location.search);
+    return results === null
+      ? ""
+      : decodeURIComponent(results[1].replace(/\+/g, " "));
+  }
 
   const startProcess = () => {
     api.camunda
@@ -337,12 +374,21 @@ const Order = (props: any) => {
         ...new GrowingBusinessBaseModel(),
         requestInfo: {
           type,
+          zalog: !!+zalog,
           fio: fio,
           iin: iin,
           phone: formatPhoneNumber(),
           email: email,
+          lang: i18n.language,
           amount: sum,
           period: period,
+          city: city,
+          utm_source: getUrlParameter("utm_source"),
+          utm_medium: getUrlParameter("utm_medium"),
+          utm_campaign: getUrlParameter("utm_campaign"),
+          utm_term: getUrlParameter("utm_term"),
+          utm_content: getUrlParameter("utm_content"),
+          utm_keyword: getUrlParameter("utm_keyword"),
         },
       })
       .then((userContext) => {
@@ -366,6 +412,11 @@ const Order = (props: any) => {
       setFioError(true);
       temp = true;
     } else setFioError(false);
+
+    if (+sum < minSum) {
+      setSumError(true);
+      temp = true;
+    } else setSumError(false);
 
     if (iin.length === 12) {
       setIinError(false);
@@ -492,7 +543,20 @@ const Order = (props: any) => {
                       <BccRadioGroup
                         value={type}
                         row
-                        onChange={(e: any) => setType(e.target.value)}
+                        onChange={(e: any) => {
+                          if (e.target.value === "1") {
+                            setZalog("1");
+                            setMaxSum(40000000);
+                            setMinSum(1000000);
+                            setSum("1000000");
+                          } else {
+                            setZalog("0");
+                            setMaxSum(5000000);
+                            setMinSum(150000);
+                            setSum("150000");
+                          }
+                          setType(e.target.value);
+                        }}
                       >
                         <BccFormControlLabel
                           value="0"
@@ -510,10 +574,49 @@ const Order = (props: any) => {
                     </BccFormControl>
                   </Grid>
                   <Grid item>
+                    <BccFormControl className={classes.radio}>
+                      <BccRadioGroup
+                        value={zalog}
+                        row
+                        onChange={(e: any) => {
+                          if (e.target.value === "1") {
+                            setMaxSum(40000000);
+                            setMinSum(1000000);
+                            setSum("1000000");
+                          } else {
+                            setMaxSum(5000000);
+                            setMinSum(150000);
+                            setSum("150000");
+                          }
+                          setZalog(e.target.value);
+                        }}
+                      >
+                        {type === "0" && (
+                          <BccFormControlLabel
+                            value="0"
+                            control={<BccRadio disableRipple />}
+                            label={t("tabs.122")}
+                            labelPlacement="end"
+                          />
+                        )}
+                        <BccFormControlLabel
+                          value="1"
+                          control={<BccRadio disableRipple />}
+                          label={t("tabs.111")}
+                          labelPlacement="end"
+                        />
+                      </BccRadioGroup>
+                    </BccFormControl>
+                  </Grid>
+                  <Grid item>
                     <BccInput
                       className={classes.inputStyle}
                       fullWidth
-                      label={type === "1" ? t("order.fioUl") : t("order.fioIp")}
+                      label={
+                        type === "1"
+                          ? `${t("order.fioUl")}*`
+                          : `${t("order.fioIp")}*`
+                      }
                       variant="filled"
                       id="fio"
                       name="fio"
@@ -525,7 +628,32 @@ const Order = (props: any) => {
                       }}
                     />
                   </Grid>
-
+                  <Grid item>
+                    <BccInput
+                      fullWidth={true}
+                      className={classes.inputStyle}
+                      label={
+                        type === "1"
+                          ? `${t("order.bin")}*`
+                          : `${t("order.iin")}*`
+                      }
+                      id="iin"
+                      name="iin"
+                      helperText={
+                        iinError && type === "1"
+                          ? `${t("order.error1")} ${t("order.bin")}`
+                          : iinError
+                          ? `${t("order.error1")} ${t("order.iin")}`
+                          : ""
+                      }
+                      error={iinError ? true : false}
+                      value={iin}
+                      onChange={(e: any) => {
+                        setIin(e.target.value.replace(/\D/g, "").substr(0, 12));
+                      }}
+                      variant="filled"
+                    />
+                  </Grid>
                   <Grid item>
                     <BccInput
                       variant="filled"
@@ -568,58 +696,34 @@ const Order = (props: any) => {
                     />
                   </Grid>
                   <Grid item>
-                    <BccInput
-                      fullWidth={true}
-                      className={classes.inputStyle}
-                      label={
-                        type === "1"
-                          ? `${t("order.bin")}*`
-                          : `${t("order.iin")}*`
-                      }
-                      id="iin"
-                      name="iin"
-                      helperText={
-                        iinError && type === "1"
-                          ? `${t("order.error1")} ${t("order.bin")}`
-                          : iinError
-                          ? `${t("order.error1")} ${t("order.iin")}`
-                          : ""
-                      }
-                      error={iinError ? true : false}
-                      value={iin}
-                      onChange={(e: any) => {
-                        setIin(e.target.value.replace(/\D/g, "").substr(0, 12));
-                      }}
-                      variant="filled"
-                    />
-                  </Grid>
-                  <Grid item>
-                    <div className={classes.paymentWrap}>
+                    <div
+                      className={classes.paymentWrap}
+                      style={{ marginBottom: sumError ? 60 : 40 }}
+                    >
                       <div className={classes.sliderWrap}>
                         <BccInput
                           label={t("order.sum")}
                           key="sum"
-                          value={
-                            sum
-                              .toString()
-                              .replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₸"
-                          }
+                          value={`${sum.replace(/\B(?=(\d{3})+(?!\d))/g, " ")}${
+                            sum !== "" ? " ₸" : ""
+                          }`}
                           variant="filled"
                           InputLabelProps={{
                             shrink: true,
                           }}
-                          onChange={(e: any) =>
-                            +e.target.value.slice(0, -2).replace(/ /g, "") >
-                            40000000
-                              ? setSum(40000000)
-                              : +e.target.value.slice(0, -2).replace(/ /g, "") <
-                                1000000
-                              ? setSum(1000000)
-                              : setSum(
-                                  e.target.value.slice(0, -2).replace(/ /g, "")
-                                )
-                          }
-                          className={classes.input}
+                          helperText={sumError ? `${t("order.errorSum")}` : ""}
+                          onFocus={() => setSum("")}
+                          onChange={(e: any) => {
+                            const s = +e.target.value.replace(
+                              /[^a-zA-Z0-9]/g,
+                              ""
+                            );
+                            if (s > maxSum) setSum(maxSum.toString());
+                            else setSum(s.toString());
+                          }}
+                          className={`${classes.input} ${
+                            sumError ? classes.sumInput : ""
+                          }`}
                         />
                         <BccSlider
                           style={{
@@ -630,46 +734,99 @@ const Order = (props: any) => {
                             padding: 0,
                             position: "absolute",
                           }}
-                          min={1000000}
-                          max={40000000}
-                          step={100000}
-                          value={sum}
+                          min={minSum}
+                          max={maxSum}
+                          step={50000}
+                          value={+sum}
                           valueLabelDisplay="off"
-                          defaultValue={sum}
+                          defaultValue={+sum}
                           onChange={(e: any, val: any) =>
-                            setSum(val instanceof Array ? val[1] : val)
+                            setSum(
+                              val instanceof Array
+                                ? val[1].toString()
+                                : val.toString()
+                            )
                           }
                         />
                         <div className={classes.sliderRange}>
-                          <span>1 000 000</span>
-                          <span>40 000 000</span>
+                          <span>
+                            {minSum === 150000 ? "150 000" : "1 000 000"}
+                          </span>
+                          <span>
+                            {maxSum === 5000000 ? "5 000 000" : "40 000 000"}
+                          </span>
                         </div>
                       </div>
                     </div>
                   </Grid>
                   <Grid item>
-                    <BccInput
-                      fullWidth={true}
-                      className={classes.inputStyle}
-                      label={t("order.period")}
-                      id="period"
-                      name="period"
-                      value={period}
-                      onChange={(e: any) => setPeriod(e.target.value)}
-                      variant="outlined"
-                      select
-                    >
-                      <MenuItem key={12} value={12}>
-                        12 {t("tabs.month")}
-                      </MenuItem>
-                      <MenuItem key={24} value={24}>
-                        24 {t("tabs.month")}
-                      </MenuItem>
-                      <MenuItem key={36} value={36}>
-                        36 {t("tabs.month")}
-                      </MenuItem>
-                    </BccInput>
+                    {zalog === "0" && type === "0" ? (
+                      <BccInput
+                        fullWidth={true}
+                        className={classes.inputStyle}
+                        label={`${t("order.period")}*`}
+                        id="period"
+                        name="period"
+                        value={period}
+                        onChange={(e: any) => setPeriod(e.target.value)}
+                        variant="outlined"
+                        select
+                      >
+                        <MenuItem key={12} value={12}>
+                          12 {t("tabs.month")}
+                        </MenuItem>
+                      </BccInput>
+                    ) : (
+                      <BccInput
+                        fullWidth={true}
+                        className={classes.inputStyle}
+                        label={`${t("order.period")}*`}
+                        id="period"
+                        name="period"
+                        value={period}
+                        onChange={(e: any) => setPeriod(e.target.value)}
+                        variant="outlined"
+                        select
+                      >
+                        <MenuItem key={12} value={12}>
+                          12 {t("tabs.month")}
+                        </MenuItem>
+                        <MenuItem key={24} value={24}>
+                          24 {t("tabs.month")}
+                        </MenuItem>
+                        <MenuItem key={36} value={36}>
+                          36 {t("tabs.month")}
+                        </MenuItem>
+                      </BccInput>
+                    )}
                   </Grid>
+                  {zalog === "0" && (
+                    <Grid item>
+                      <BccInput
+                        fullWidth={true}
+                        className={classes.inputStyle}
+                        label={t("order.city") + "*"}
+                        id="city"
+                        name="city"
+                        value={city}
+                        onChange={(e: any) => setCity(e.target.value)}
+                        variant="outlined"
+                        select
+                      >
+                        {data
+                          .filter(
+                            (d: any, index: number, self: any) =>
+                              index ===
+                              self.findIndex((dd: any) => dd.city === d.city)
+                          )
+                          .map((c: any, i: number) => (
+                            <MenuItem value={c.city} key={i}>
+                              {c.city}
+                            </MenuItem>
+                          ))}
+                      </BccInput>
+                    </Grid>
+                  )}
                   <Grid item>
                     <Grid
                       container
@@ -823,17 +980,25 @@ const Order = (props: any) => {
                     <BccTypography block mb="16px" type="h5">
                       {t("order.succesTitle")}
                     </BccTypography>
-                    <BccTypography block type="p2l" mb="16px">
-                      {t("order.succesText")}
-                    </BccTypography>
-                    <BccButton
-                      href={`https://green.bcc.kz/login?processInstanceId=${processInstanceId}&taskDefinitionKey=application_form&token=${token}`}
-                      variant="contained"
-                      color="primary"
-                      className={classes.okBtn}
-                    >
-                      {t("order.ok")}
-                    </BccButton>
+                    {zalog === "0" && type === "0" ? (
+                      <BccTypography block type="p2l" mb="16px">
+                        {t("order.succesTextShort")}
+                      </BccTypography>
+                    ) : (
+                      <>
+                        <BccTypography block type="p2l" mb="16px">
+                          {t("order.succesText")}
+                        </BccTypography>
+                        <BccButton
+                          href={`https://green.bcc.kz/login?processInstanceId=${processInstanceId}&taskDefinitionKey=application_form&token=${token}`}
+                          variant="contained"
+                          color="primary"
+                          className={classes.okBtn}
+                        >
+                          {t("order.ok")}
+                        </BccButton>
+                      </>
+                    )}
                   </div>
                 </Grid>
               )}

@@ -41,9 +41,8 @@ const useStyles = makeStyles((theme: Theme) =>
       itemTitle: {
         marginBottom: 10,
         fontFamily: "Roboto",
-        fontStyle: "bold",
-        fontWeight: 500,
-        fontSize: 24,
+        fontWeight: 300,
+        fontSize: 20,
         lineHeight: "28px",
         color: "#141414",
       },
@@ -108,7 +107,12 @@ const Banner = (props: any) => {
           {items.map((i: string, index: number) => (
             <Grid item className={classes.item}>
               <img src={process.env.PUBLIC_URL + i} />
-              <BccTypography type="h6" block className={classes.itemTitle}>
+              <BccTypography
+                type="h6"
+                weight="normal"
+                block
+                className={classes.itemTitle}
+              >
                 {t(`benefits.${index + 1}`)}
               </BccTypography>
             </Grid>

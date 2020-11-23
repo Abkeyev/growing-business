@@ -1,6 +1,7 @@
 ﻿{
   "banner": {
     "title": "Growing business",
+    "subtitle": "Quick loan – easy and simple!",
     "button": "Apply"
   },
   "benefits": {
@@ -35,22 +36,26 @@
     "doc1": "List of documents",
     "doc2": "Sole Member Decision Template",
     "doc3": "Founders General Minutes of Meeting Template",
-    "4": "Тарифы",
-    "type1": "Funds of EBRD",
-    "type2": "Bank's own funds",
+    "4": "Tariffs",
+    "type1": "EBRD funds",
+    "type2": "Within the framework of the State Program for Support of Entrepreneurship “Business Roadmap - 2025”",
+    "type3": "Bank’s own funds",
     "name": "Tariff name",
     "period": "Term",
     "price": "Price parameters",
-    "name1": "Nominal interest rate*:",
+    "name1": "Nominal interest rate",
     "name2": "Annual effective return rate",
     "name3": "Penalty for delay",
-    "name4": "Loan arrangement fee*",
+    "name4": "Loan arrangement fee",
+    "name5": "Subsidized remuneration rate",
+    "name6": "Final rate for the borrower",
     "month": "months",
     "year": "per annum",
     "period1": "per day from the amount of delay",
     "period2": "of the loan amount",
     "add": "* When included in the State Enterprise Support Program «Business Road Map - 2025», the nominal interest rate will be 14% per annum, while the commission for arranging a loan is not charged.",
-    "doc": "Criteria for obtaining a loan with EBRD funds"
+    "doc": "Criteria for obtaining a loan with EBRD funds",
+    "doc11": "Criteria for obtaining a loan under the State Enterprise Support Program “Business Road Map - 2025”"
   },
   "order": {
     "title": "Make a loan application",

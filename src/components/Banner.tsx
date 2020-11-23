@@ -7,80 +7,6 @@ import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    [theme.breakpoints.down("sm")]: {
-      container: {
-        background: `url(${process.env.PUBLIC_URL +
-          "/banner-m.png"}) no-repeat white`,
-        backgroundSize: "contain",
-        backgroundPosition: "right",
-      },
-      containerOut: {
-        background: "linear-gradient(to top, #ffffff, #f9f6f3)",
-      },
-      innerContainer: {
-        position: "relative",
-        margin: "0 auto",
-        width: "100%",
-        padding: "60px 20px 40px",
-        boxSizing: "border-box",
-      },
-      title: {
-        marginBottom: 15,
-        fontWeight: "bold",
-        fontFamily: "Roboto",
-        fontSize: 28,
-        lineHeight: "33px",
-        color: "#141414",
-      },
-      subTitle: {
-        marginBottom: 30,
-        opacity: 0.7,
-        fontWeight: "normal",
-        fontFamily: "Roboto",
-        fontSize: 16,
-        lineHeight: "19px",
-        color: "#5B5B5B",
-      },
-      blockText: {
-        marginBottom: 5,
-        fontWeight: "bold",
-        fontFamily: "Roboto",
-        fontSize: 24,
-        lineHeight: "28px",
-        color: "#141414",
-      },
-
-      firstBlock: {
-        marginBottom: 15,
-      },
-
-      openBtn: {
-        minWidth: 300,
-        fontSize: 18,
-        fontWeight: "bold",
-        fontFamily: "Roboto",
-        lineHeight: "21px",
-        color: "#ffffff",
-        width: "100%",
-        marginTop: 160,
-      },
-      select: {
-        position: "absolute",
-        right: 20,
-        top: 50,
-        color: "#000D1A",
-        paddingLeft: 7,
-        fontSize: 14,
-        backgroundColor: "white",
-        borderRadius: 8,
-        "&:hover:not(.Mui-disabled):before": {
-          borderBottom: 0,
-        },
-        "&::after, &::before": {
-          borderBottom: 0,
-        },
-      },
-    },
     [theme.breakpoints.between("md", "xl")]: {
       container: {
         background: `url(${process.env.PUBLIC_URL +
@@ -120,6 +46,76 @@ const useStyles = makeStyles((theme: Theme) =>
         position: "absolute",
         right: 100,
         top: 24,
+        color: "#000D1A",
+        paddingLeft: 7,
+        fontSize: 14,
+        backgroundColor: "white",
+        borderRadius: 8,
+        "&:hover:not(.Mui-disabled):before": {
+          borderBottom: 0,
+        },
+        "&::after, &::before": {
+          borderBottom: 0,
+        },
+      },
+    },
+
+    [theme.breakpoints.down("sm")]: {
+      container: {
+        background: `url(${process.env.PUBLIC_URL +
+          "/banner-m.png"}) no-repeat white`,
+        backgroundSize: "contain",
+        backgroundPosition: "right",
+      },
+      containerOut: {
+        background: "linear-gradient(to top, #ffffff, #f9f6f3)",
+      },
+      innerContainer: {
+        position: "relative",
+        margin: "0 auto",
+        width: "100%",
+        padding: "60px 20px 40px",
+        boxSizing: "border-box",
+      },
+      title: {
+        marginBottom: 15,
+      },
+      subTitle: {
+        marginBottom: 30,
+        opacity: 0.7,
+        fontWeight: "normal",
+        fontFamily: "Roboto",
+        fontSize: 16,
+        lineHeight: "19px",
+        color: "#5B5B5B",
+      },
+      blockText: {
+        marginBottom: 5,
+        fontWeight: "bold",
+        fontFamily: "Roboto",
+        fontSize: 24,
+        lineHeight: "28px",
+        color: "#141414",
+      },
+
+      firstBlock: {
+        marginBottom: 15,
+      },
+
+      openBtn: {
+        minWidth: 300,
+        fontSize: 18,
+        fontWeight: "bold",
+        fontFamily: "Roboto",
+        lineHeight: "21px",
+        color: "#ffffff",
+        width: "100%",
+        marginTop: 160,
+      },
+      select: {
+        position: "absolute",
+        right: 20,
+        top: 50,
         color: "#000D1A",
         paddingLeft: 7,
         fontSize: 14,
@@ -186,8 +182,17 @@ const Banner = (props: any) => {
     <div className={classes.containerOut}>
       <div className={classes.container}>
         <div className={classes.innerContainer}>
-          <BccTypography type="h1" block className={classes.title}>
+          <BccTypography type="h1" block mb="12px">
             {t("banner.title")}
+          </BccTypography>
+          <BccTypography
+            type="h4"
+            weight="normal"
+            color="#80868C"
+            block
+            className={classes.title}
+          >
+            {t("banner.subtitle")}
           </BccTypography>
           <Select
             className={classes.select}
@@ -201,7 +206,7 @@ const Banner = (props: any) => {
           >
             <MenuItem value="ru">РУС</MenuItem>
             <MenuItem value="kz">КАЗ</MenuItem>
-            <MenuItem value="en">ENG</MenuItem>
+            {/* <MenuItem value="en">ENG</MenuItem> */}
           </Select>
           <BccButton
             className={classes.openBtn}

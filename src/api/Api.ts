@@ -3,6 +3,7 @@ import moment from "moment";
 import { AuthOtpController } from "./AuthOtpController";
 import { CamundaController } from "./CamundaController";
 import { ReferenceController } from "./ReferenceController";
+import { KatoController } from "./KatoController";
 
 const baseURL = process.env.REACT_APP_SERVER_URL || "";
 
@@ -11,6 +12,7 @@ export class Api {
   authOtp = new AuthOtpController();
   camunda = new CamundaController();
   reference = new ReferenceController();
+  kato = new KatoController();
 }
 
 export interface OrderRequest {

@@ -17,6 +17,7 @@ export { default as BccStepLabel } from "./BccStepper/BccStepLabel/BccStepLabel"
 export { default as BccStepConnector } from "./BccStepper/BccStepConnector/BccStepConnector";
 
 export { default as BccTable } from "./BccTable/BccTable";
+export { default as BccChip } from "./BccChip/BccChip";
 export { default as BccTableBody } from "./BccTable/BccTableBody/BccTableBody";
 export { default as BccTableCell } from "./BccTable/BccTableCell/BccTableCell";
 export { default as BccTableContainer } from "./BccTable/BccTableContainer/BccTableContainer";
