@@ -1291,7 +1291,7 @@ const Tabs = (props: any) => {
                             <BccTableCell>
                               <BccTableRow>
                                 <BccTableCell>
-                                  12 {t("tabs.month")}
+                                  24 {t("tabs.month")}
                                 </BccTableCell>
                               </BccTableRow>
                             </BccTableCell>
@@ -1308,7 +1308,7 @@ const Tabs = (props: any) => {
                             <BccTableCell>
                               <BccTableRow>
                                 <BccTableCell>
-                                  12 {t("tabs.month")}
+                                  24 {t("tabs.month")}
                                 </BccTableCell>
                               </BccTableRow>
                             </BccTableCell>
@@ -1325,7 +1325,7 @@ const Tabs = (props: any) => {
                             <BccTableCell>
                               <BccTableRow>
                                 <BccTableCell>
-                                  12 {t("tabs.month")}
+                                  24 {t("tabs.month")}
                                 </BccTableCell>
                               </BccTableRow>
                             </BccTableCell>
@@ -1340,7 +1340,7 @@ const Tabs = (props: any) => {
                             <BccTableCell>
                               <BccTableRow>
                                 <BccTableCell>
-                                  12 {t("tabs.month")}
+                                  24 {t("tabs.month")}
                                 </BccTableCell>
                               </BccTableRow>
                             </BccTableCell>
