@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
         position: "relative",
         margin: "0 auto",
         width: "100%",
-        padding: "100px 100px 150px",
+        padding: "24px 100px 150px",
         boxSizing: "border-box",
       },
       title: {
@@ -129,6 +129,9 @@ const useStyles = makeStyles((theme: Theme) =>
         },
       },
     },
+    logo: {
+      marginBottom: 80
+    },
     link: {
       color: "#249052",
       textDecoration: "underline",
@@ -182,6 +185,9 @@ const Banner = (props: any) => {
     <div className={classes.containerOut}>
       <div className={classes.container}>
         <div className={classes.innerContainer}>
+          <a href="https://www.bcc.kz/">
+            <img className={classes.logo} src="logo.svg" alt="BCC logo" />
+          </a>
           <BccTypography type="h1" block mb="12px">
             {t("banner.title")}
           </BccTypography>

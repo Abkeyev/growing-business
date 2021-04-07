@@ -792,7 +792,7 @@ const Order = (props: any) => {
                           12 {t("tabs.month")}
                         </MenuItem>
                         <MenuItem key={24} value={24}>
-                          24 {t("tabs.month")}
+                          24 {t("tabs.montha")}
                         </MenuItem>
                         <MenuItem key={36} value={36}>
                           36 {t("tabs.month")}
