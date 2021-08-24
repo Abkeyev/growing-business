@@ -2,7 +2,7 @@ import React from "react";
 import { Grid, Typography } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { PhoneAndroid, Call } from "@material-ui/icons";
-import WhatsAppIcon from '@material-ui/icons/WhatsApp';
+import WhatsAppIcon from "@material-ui/icons/WhatsApp";
 import ReactGA from "react-ga";
 import { useTranslation } from "react-i18next";
 
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
         width: "100%",
         marginBottom: 12,
         display: "flex",
-        cursor: 'pointer',
+        cursor: "pointer",
         alignItems: "center",
       },
       ourSpec: {
@@ -78,12 +78,12 @@ const useStyles = makeStyles((theme: Theme) =>
         borderRadius: 8,
         border: "1px solid #E8E8E8",
         padding: 20,
-        width: 'auto',
+        width: "auto",
         height: 104,
         marginLeft: 10,
         marginRight: 10,
         display: "flex",
-        cursor: 'pointer',
+        cursor: "pointer",
         alignItems: "center",
       },
       ourSpec: {
@@ -132,7 +132,7 @@ const CallUs = () => {
     //   category: "BccCard_iron_call_2443030",
     //   action: "iron_call_2443030",
     // });
-    window.open("https://wa.me/77780929301")
+    window.open("https://wa.me/77471111605");
   };
 
   const onClickCallMB = () => {
@@ -145,16 +145,18 @@ const CallUs = () => {
 
   return (
     <Grid container className={classes.mainRoot}>
-      <Grid container className={classes.root} justify="center" wrap="wrap" >
+      <Grid container className={classes.root} justify="center" wrap="wrap">
         <Grid item onClick={() => onClickCallWP()} className={classes.paper}>
           <Grid container alignItems="center" wrap="nowrap" spacing={2}>
             <Grid item>
               <Typography className={classes.freeCall}>
-                <WhatsAppIcon className={classes.freeCall}/>
+                <WhatsAppIcon className={classes.freeCall} />
               </Typography>
             </Grid>
             <Grid item>
-              <Typography className={classes.freeCall}>8 (778) 092-93-01</Typography>
+              <Typography className={classes.freeCall}>
+                8(747)111-16-05
+              </Typography>
             </Grid>
           </Grid>
         </Grid>
@@ -182,7 +184,7 @@ const CallUs = () => {
             </Grid>
             <Grid item>
               <Typography className={classes.freeCall}>
-                8 (727) 244-30-44
+                8(727)244-30-44
               </Typography>
             </Grid>
           </Grid>
